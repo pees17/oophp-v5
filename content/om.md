@@ -4,7 +4,7 @@ views:
         region: sidebar-right
         template: anax/v2/block/default
         data:
-            meta: 
+            meta:
                 type: single
                 route: block/om-kursrepo
 
@@ -12,17 +12,28 @@ views:
         region: sidebar-right
         template: anax/v2/block/default
         data:
-            meta: 
+            meta:
                 type: single
                 route: block/om-redovisa
+
+    byline:
+        region: main
+        template: anax/v2/block/default
+        sort: 2
+        data:
+            meta:
+                type: single
+                route: block/byline
 ---
-Om
+Om denna webbplats
 =========================
 
-Detta innehåll är skrivet i markdown och du hittar innehållet i filen `content/om.md`.
+[FIGURE src=image/php_PNG49.png?w=150 class="right" alt="Design logo"]
 
-Skriv några kloka ord om kursen?
+Denna webbplats är byggd i HTML, CSS och med PHP, som en del i kursen [oophp (v5)](https://dbwebb.se/kurser/oophp-v5). Kursen fokuserar på objektorienterade programmeringstekniker i programmeringsspråket PHP.
 
-Lägg till en fin och representativ bild för kursen, enligt ditt eget val.
+Klassiska objektorienterade konstruktioner hanteras tillsammans med objektorienterad programmering i webbaserat ramverk tillsammans med databaser samt enhetstestning.
 
-[FIGURE src=image/car.png?w=740&filter=grayscale&f1=colorize,0,30,0,0 caption="En fin bil som demobild, lite oklart hur den är representativ, men ändå..."]
+[FIGURE src=image/php-151199_960_720.png?w=100% class="left" alt="PHP elephant"]
+
+Kursen ingår i kurspaketet [Webbprogrammering och Databaser](https://www.bth.se/kurspaket/KP653/20182/) vid Blekinge Tekniska Högskola.

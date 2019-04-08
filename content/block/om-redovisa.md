@@ -1,3 +1,3 @@
 #### Redovisa på GitHub
 
-Skriv något kort om ditt redovisa-repo och länka till [repot för me/redovisa på GitHub](XXX).
+Hela min redovisning i kursen oophp (v5), d.v.s. denna webbplats, finns upplagt på Github. Se [repot för me/redovisa på GitHub](https://github.com/pees17/oophp-v5).
