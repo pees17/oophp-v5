@@ -1,4 +1,4 @@
-<div class="byline">
+<div class="author-byline">
 
 [FIGURE src="image/Peo-svartvit.jpg?w=110" class="left" caption="Peo Malm"]
 

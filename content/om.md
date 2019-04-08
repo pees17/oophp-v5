@@ -34,6 +34,8 @@ Denna webbplats är byggd i HTML, CSS och med PHP, som en del i kursen [oophp (v
 
 Klassiska objektorienterade konstruktioner hanteras tillsammans med objektorienterad programmering i webbaserat ramverk tillsammans med databaser samt enhetstestning.
 
-[FIGURE src=image/php-151199_960_720.png?w=100% class="left" alt="PHP elephant"]
+
 
 Kursen ingår i kurspaketet [Webbprogrammering och Databaser](https://www.bth.se/kurspaket/KP653/20182/) vid Blekinge Tekniska Högskola.
+
+[FIGURE src=image/php-151199_960_720.png?w=320 class="left" alt="PHP elephant"]

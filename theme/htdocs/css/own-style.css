@@ -1,0 +1,21 @@
+/*!
+ * Stylesheet for the oophp course.
+ *
+ * This stylesheet includes the dbwebb-se.min.css stylesheet, and the adds some extra style.
+ */
+/**
+ * Import the dbwebb-se.min.css stylesheet.
+ */
+@import "dbwebb-se.min.css";
+/**
+ * Import mixins.
+ */
+/**
+ * A small clearfix:
+ * http://stackoverflow.com/questions/211383/what-methods-of-clearfix-can-i-use
+ */
+article.article::after {
+  content: "";
+  display: block;
+  clear: both;
+}

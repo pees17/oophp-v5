@@ -14,7 +14,7 @@ views:
 Om Mig Själv
 ==============
 
-[FIGURE src="image/IMG-20181003-WA0006.jpg?w=250&height=500&crop-to-fit&area=0,10,15,0&" class="right" caption="Vandring i Rio Chillar, 2018" alt="Picture of me in Rio Chillar"]
+[FIGURE src="image/IMG-20181003-WA0006.jpg?w=250&height=500&crop-to-fit&area=0,10,15,0&" class="right w33" caption="Vandring i Rio Chillar, 2018" alt="Picture of me in Rio Chillar"]
 
 Mitt namn är Peo Malm och jag är född i Timrå, utanför Sundsvall, där jag spenderade mina första 11 år.
 Sedan flyttade familjen till Strömsund i Jämtland, där jag senare under gymnasietiden stötte på programmering för första gången i form av Basic.

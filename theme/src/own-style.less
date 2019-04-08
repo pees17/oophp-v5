@@ -1,0 +1,219 @@
+/*!
+ * Stylesheet for the oophp course.
+ *
+ * This stylesheet includes the dbwebb-se.min.css stylesheet, and the adds some extra style.
+ */
+
+/**
+ * Import the dbwebb-se.min.css stylesheet.
+ */
+@import "dbwebb-se.min.css";
+
+/**
+ * Import mixins.
+ */
+@import "@desinax/mixin/less/clearfix.less";
+
+.clearfix() {
+    #desinax-mixin.clearfix();
+}
+
+article.article {
+    .clearfix();
+}
+
+
+// /**
+//  * A responsive menu.
+//  */
+//
+// @import "@desinax/responsive-menu/less/responsive-menu.less";
+// // @import "@desinax/responsive-menu/less/media-queries.less";
+//
+// /**
+//  * Import the typographic grid.
+//  */
+// @import "@desinax/typographic-grid/less/typography-font-families.less";
+// @import "@desinax/typographic-grid/less/typography-defaults.less";
+//
+// // Show the grid
+// .hgrid .inner-wrap {
+//     @gridImage: "../img/magic-number-@{magicNumber}.png";
+//     #desinax-hgrid.showGrid(@gridImage);
+// }
+//
+// /**
+//  * Base style to affect HTML elements on a general scale.
+//  */
+//  // @import "base/base.less";
+//  @import "base/base_kmom03.less";
+//
+// /**
+//  * Import the vertical grid.
+//  */
+// @import "@desinax/vertical-grid/less/grid.less";
+//
+// @import "layout/vgrid.less";
+//
+// // // Default grid, change to fit your requirements.
+// // @columnWidth:   30;
+// // @gutterWidth:   10;
+// // @columns:       24;
+// // @gridType:      "float"; // "flex"
+//
+// /**
+//  * Layout style for general structure of header, navbar, main, footer
+//  * and other regions of the page including route specific styles.
+//  */
+// @import "layout/regions.less";     // To add style for ?regions
+// // @import "layout/layout.less";
+// // @import "layout/layout_kmom02.less";
+// @import "module/site-logo.less";
+// // @import "module/navbars.less";
+// // @import "module/navbars_kmom05.less";
+// @import "module/navbars_kmom06-designprinciper.less";
+// @import "module/byline.less";
+// // @import "module/figure.less";
+// @import "@desinax/figure/less/figure.less";
+// // Enable style from the module and optinally add customized layout
+// figure.figure {
+//     #desinax-figure.figure();
+// }
+// @import "module/blog.less";
+// @import "module/color-scheme.less";
+//
+// // @import "layout/responsive.less";
+// // @import "layout/responsive_kmom03.less";
+// // @import "layout/responsive_kmom04.less";
+// // @import "layout/responsive_kmom05.less";
+// @import "layout/responsive_kmom06-designprinciper.less";
+//
+// /**
+//  * My own settings, not currently in their own module.
+// */
+// @colorH1BorderBottom: #888;
+// @colorH2BorderBottom: #AAA;
+// @colorH3BorderBottom: #CCC;
+// @colorH4BorderBottom: #DDD;
+//
+// // Adapt the typographic grid to my style
+// // @fontFamilyHeadings: "serif";
+// // @fontFamilyBody:     "sans-serif";
+// @fontFamilyCode:     "monospace";
+//
+//
+// // Magic number and base fontsize
+// @magicNumber:  24px;  // 22px
+// @fontSizeBody: 16px;
+//
+// /**
+//  * Typographic font families to choose from.
+// */
+// // Monospace
+// // @fontFamilyCourier
+// // @fontFamilyMonospace
+//
+// // Serif
+// // @fontFamilyCambria
+// // @fontFamilyTimes
+// // @fontFamilyTimesNewRoman
+// // @fontFamilyGaramond
+//
+// // Sans-serif
+// // @fontFamilyHelvetica Bra body
+// // @fontFamilyCalibri
+// // @fontFamilyVerdana Bra body
+// // @fontFamilyMyriadPro Bra body
+// // @fontFamilyHelveticaNeue
+// // @fontFamilyArial
+//
+// @import url('https://fonts.googleapis.com/css?family=Roboto|Charm');
+//
+// @fontFamilySiteLogo:  'Charm', cursive;
+// @fontFamilyNavbar:    'Charm', cursive;
+//
+// @fontFamilyHeadings:  'Roboto', sans-serif;
+// @fontFamilyBody:      @fontFamilyVerdana;
+// @fontFamilyBlog:      'Comic Sans MS', cursive, sans-serif;
+//
+// @logoColor:     #069ed1;
+// @bgColorRmSubMenuButtonHover: #222;
+// @blogHoverColor: @logoColor;
+//
+// .toc li.selected {
+//     background: linear-gradient(to right, rgba(6, 158, 209, 0.5), rgba(6, 158, 209, 0.2));
+// }
+//
+// // Remove large site-logo
+// .site-logo {
+//     display: none;
+// }
+// .site-logo-text-icon {
+//     display: inline-block;
+// }
+// .site-logo-text {
+//     font-size: 44px;
+//     padding-bottom: 10px;
+//     margin-top: -2px;
+//     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+//     color: @logoColor;
+// }
+// // Flash picture spanning 100%
+// .inner-wrap-flash {
+//     #desinax-vgrid.grid(100%);
+// }
+// .region-flash img {
+//     width: 100%;
+// }
+//
+// // Background picture and transparent body
+// html {
+//     background-color: #2e2e30;
+//     background-image: url("../img/black-and-white-dark-light-255347.jpg");
+//     background-attachment: fixed;
+//     background-position: bottom left;
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//
+// }
+// body {
+//     background-color: unset;
+//     color: #222;
+// }
+// @keyframes appear {
+//     0%  {opacity: 0;}
+//   100%  {opacity: 1;}
+// }
+// .region-main, .region-sidebar-left, .region-sidebar-right {
+//     background-color: rgba(255,255,255,0.7);
+//     padding: 4px;
+//     margin-top: 1em;
+//     border-radius: 5px;
+//     box-shadow: 5px 5px 3px 0px rgba(0, 0, 0, 0.5);
+//     animation-name: appear;
+//     animation-duration: 0.25s;
+//     animation-timing-function: cubic-bezier(0.72, 0.01, 1, 1);
+// }
+// .region-header {
+//     .clearfix();
+//     background-color: rgba(255,255,255,0.85);
+// }
+// .region-breadcrumb {
+//     color: #ccc;
+// }
+// .outer-wrap.outer-wrap-main {
+//     margin-bottom: 1em;
+// }
+// .outer-wrap.outer-wrap-header {
+//     padding-bottom: 0;
+// }
+// .outer-wrap.outer-wrap-footer {
+//     background-color: rgba(0,0,0,0.5);
+//     color: #bbb;
+// }
+// .inner-wrap-footer {
+//     border-top: unset;
+// }
+// h4 {
+//     border-bottom: 1px solid #999;
+// }
