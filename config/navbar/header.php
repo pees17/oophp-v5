@@ -6,7 +6,7 @@ return [
     // Use for styling the menu
     "wrapper" => null,
     "class" => "my-navbar rm-default rm-desktop",
- 
+
     // Here comes the menu items
     "items" => [
         [
@@ -34,29 +34,38 @@ return [
             ],
         ],
         [
+            "text" => "Diverse",
+            "url" => "#",
+            "title" => "Diverse.",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "Styleväljare",
+                        "url" => "style",
+                        "title" => "Välj stylesheet.",
+                    ],
+                    [
+                        "text" => "Docs",
+                        "url" => "dokumentation",
+                        "title" => "Dokumentation av ramverk och liknande.",
+                    ],
+                    [
+                        "text" => "Test &amp; Lek",
+                        "url" => "lek",
+                        "title" => "Testa och lek med test- och exempelprogram",
+                    ],
+                    [
+                        "text" => "Anax dev",
+                        "url" => "dev",
+                        "title" => "Anax development utilities",
+                    ],
+                ],
+            ],
+        ],
+        [
             "text" => "Om",
             "url" => "om",
             "title" => "Om denna webbplats.",
-        ],
-        [
-            "text" => "Styleväljare",
-            "url" => "style",
-            "title" => "Välj stylesheet.",
-        ],
-        [
-            "text" => "Docs",
-            "url" => "dokumentation",
-            "title" => "Dokumentation av ramverk och liknande.",
-        ],
-        [
-            "text" => "Test &amp; Lek",
-            "url" => "lek",
-            "title" => "Testa och lek med test- och exempelprogram",
-        ],
-        [
-            "text" => "Anax dev",
-            "url" => "dev",
-            "title" => "Anax development utilities",
         ],
     ],
 ];
