@@ -19,8 +19,10 @@ $app->router->get("guess/init", function () use ($app) {
  * Show the secret number and redirect back to play
  */
 $app->router->get("guess/cheat", function () use ($app) {
-    // Set res in the session
-    $game = $_SESSION["game"] ?? null;
+    // Get game from session. If session has timed out, restart game
+    if (!($game = $_SESSION["game"] ?? null)) {
+        return $app->response->redirect("guess/init");
+    }
     $_SESSION["res"] = "CHEAT: Current number is: <b>{$game->number()}</b>";
 
     return $app->response->redirect("guess/play");
@@ -61,6 +63,12 @@ $app->router->post("guess/play", function () use ($app) {
     $res = $_SESSION["res"] ?? null;
     $game = $_SESSION["game"] ?? null;
 
+    // Get game from session. If session has timed out, restart game
+    if (!($game = $_SESSION["game"] ?? null)) {
+        return $app->response->redirect("guess/init");
+    }
+
+    // Handle guess
     if (!$game->gameOver()) {
         try {
             $res = "Your guess $guess is <b>{$game->makeGuess($guess)}</b>";
