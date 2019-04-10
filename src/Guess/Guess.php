@@ -11,7 +11,7 @@ class Guess
  */
     /**
      * @var int $number     The current secret number.
-     * @var int $tries      Number of tries a guess has been made.
+     * @var int $tries      Number of tries left
      * @var bool $gameOver  True if the game is over
      */
     private $number;
@@ -30,7 +30,7 @@ class Guess
     public function __construct(int $number = -1, int $tries = 6)
     {
         $this->tries = $tries;
-        $this->gameOver = false;
+        $this->gameOver = $tries > 0 ? false : true;
 
         if ($number === -1) {
             $number = rand(1, 100);
@@ -75,7 +75,7 @@ class Guess
     /**
      * Get the gameOver status.
      *
-     * @return bool true if the game is over
+     * @return bool true if the game is over, i.e out of guesses or a winner
      */
     public function gameOver() : bool
     {
@@ -107,6 +107,6 @@ class Guess
         if ($guess < $this->number) {
             return "TOO LOW";
         }
-        return "CORRECT - Congratulations, you won!";
+        return "CORRECT!!";
     }
 }

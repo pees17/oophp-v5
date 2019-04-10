@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v2.0.1 (2019-04-09)
+------------------------
+* Guess game moved to framework and working well.
+
 v1.0.3 (2019-04-09)
 ------------------------
 * Added the report to kmom01.

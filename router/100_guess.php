@@ -20,7 +20,8 @@ $app->router->get("guess/init", function () use ($app) {
  */
 $app->router->get("guess/cheat", function () use ($app) {
     // Set res in the session
-    $_SESSION["res"] = "CHEAT: Current number is: <b>{$_SESSION["game"]->number()}</b>";
+    $game = $_SESSION["game"] ?? null;
+    $_SESSION["res"] = "CHEAT: Current number is: <b>{$game->number()}</b>";
 
     return $app->response->redirect("guess/play");
 });
@@ -55,11 +56,10 @@ $app->router->post("guess/play", function () use ($app) {
 
     // Get post variables
     $guess = $_POST["guess"] ?? null;
-    $doGuess = $_POST["doGuess"] ?? null;
 
     // Get variables from the session
-    $game = $_SESSION["game"] ?? null;
     $res = $_SESSION["res"] ?? null;
+    $game = $_SESSION["game"] ?? null;
 
     if (!$game->gameOver()) {
         try {
@@ -74,8 +74,7 @@ $app->router->post("guess/play", function () use ($app) {
         }
     }
     // Update session
-    $_SESSION["res"] = $res;                // Keep $res between page reloads
-    $_SESSION["game"] = $game;              // Maybe not needed?
+    $_SESSION["res"] = $res;
 
     return $app->response->redirect("guess/play");
 });
