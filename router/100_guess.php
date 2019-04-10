@@ -1,0 +1,81 @@
+<?php
+/**
+ * Create routes using $app programming style.
+ */
+//var_dump(array_keys(get_defined_vars()));
+
+/**
+ * Init the game and redirect to play the game
+ */
+$app->router->get("guess/init", function () use ($app) {
+    // Init the session for the gamestart
+    $_SESSION["game"] = new Peo\Guess\Guess();
+    $_SESSION["res"] = null;
+
+    return $app->response->redirect("guess/play");
+});
+
+/**
+ * Show the secret number and redirect back to play
+ */
+$app->router->get("guess/cheat", function () use ($app) {
+    // Set res in the session
+    $_SESSION["res"] = "<p>CHEAT: Current number is: <b>{$_SESSION["game"]->number()}</b></p>";
+
+    return $app->response->redirect("guess/play");
+});
+
+/**
+ * Play the game - show game status
+ */
+$app->router->get("guess/play", function () use ($app) {
+    $title = "Guess my number";
+
+    // Get variables from the session
+    $res = $_SESSION["res"] ?? null;
+    $game = $_SESSION["game"] ?? null;
+
+    $data = [
+        "tries" => $game->tries(),
+        "res" => $res
+    ];
+
+    $app->page->add("guess/play", $data);
+    // $app->page->add("guess/debug");
+
+    return $app->page->render([
+        "title" => $title,
+    ]);
+});
+
+/**
+ * Play the game - make a guess
+ */
+$app->router->post("guess/play", function () use ($app) {
+
+    // Get post variables
+    $guess = $_POST["guess"] ?? null;
+    $doGuess = $_POST["doGuess"] ?? null;
+
+    // Get variables from the session
+    $game = $_SESSION["game"] ?? null;
+    $res = $_SESSION["res"] ?? null;
+
+    if (!$game->gameOver()) {
+        try {
+            $res = "<p>Your guess $guess is <b>{$game->makeGuess($guess)}</b></p>";
+            if ($game->gameOver()) {
+                $res .= "\n<p>The game is over, hit \"Restart\" to play again</p>";
+            }
+        } catch (Peo\Guess\GuessException $e) {
+            $res = "<p><b>{$e->getMessage()}</b></p>";
+        } catch (TypeError $e) {
+            $res = "<p><b>Guess must be an integer</b></p>";
+        }
+    }
+    // Update session
+    $_SESSION["res"] = $res;                // Keep $res between page reloads
+    $_SESSION["game"] = $game;              // Maybe not needed?
+
+    return $app->response->redirect("guess/play");
+});

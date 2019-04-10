@@ -60,6 +60,11 @@ return [
                         "url" => "dev",
                         "title" => "Anax development utilities",
                     ],
+                    [
+                        "text" => "Guess game",
+                        "url" => "guess-game",
+                        "title" => "Spela gissa mitt nummer",
+                    ],
                 ],
             ],
         ],

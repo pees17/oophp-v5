@@ -19,3 +19,21 @@ article.article::after {
   display: block;
   clear: both;
 }
+a.button {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  background: #777;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin-top: 0.5em;
+}
+a.button:hover {
+  background: #444;
+}
+.wrap-all {
+  overflow-x: hidden;
+}
+.inner-wrap-main {
+  min-height: 30em;
+}
