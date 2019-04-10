@@ -12,12 +12,16 @@ namespace Anax\View;
 
 <p>Guess a number between 1 and 100, you have <?= $tries ?> guesses left.</p>
 
-<form method="post">
+<div class="guess-container">
+<form class="guess-game" method="post">
     <input type="text" name="guess">
     <input type="submit" name="doGuess" value="Make a guess">
 </form>
 
-<?= $res ?>
+<div class="guess-game">
+    <a class="button" title="Start from beginning" href="init">Restart</a>
+    <a class="button" title="View the secret number" href="cheat">Cheat</a>
+</div>
+</div>
 
-<a class="button" title="Start from beginning" href="init">Restart</a>
-<a class="button" title="View the secret number" href="cheat">Cheat</a>
+<p class="guess-game"><?= $res ?></p>

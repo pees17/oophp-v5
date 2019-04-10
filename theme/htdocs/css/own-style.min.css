@@ -2,4 +2,4 @@
  * Stylesheet for the oophp course.
  *
  * This stylesheet includes the dbwebb-se.min.css stylesheet, and the adds some extra style.
- */@import "dbwebb-se.min.css";article.article::after{content:"";display:block;clear:both}a.button{display:inline-block;text-decoration:none;color:#fff;background:#777;border-radius:5px;padding:.5em;margin-top:.5em}a.button:hover{background:#444}.wrap-all{overflow-x:hidden}.inner-wrap-main{min-height:30em}
+ */@import "dbwebb-se.min.css";article.article::after{content:"";display:block;clear:both}.wrap-all{overflow-x:hidden}.inner-wrap-main{min-height:30em}.guess-game{float:left;margin:0 1em 1em 0}.guess-game input[type=text]{width:100px;margin-right:10px}.guess-game a.button{width:75px;display:inline-block;text-decoration:none;color:#fff;background:#777;padding:.2em;text-align:center}.guess-game a.button:hover{background:#444}p.guess-game{margin-top:12px}.guess-container::after{content:"";display:block;clear:both}

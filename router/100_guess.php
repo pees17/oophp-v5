@@ -20,7 +20,7 @@ $app->router->get("guess/init", function () use ($app) {
  */
 $app->router->get("guess/cheat", function () use ($app) {
     // Set res in the session
-    $_SESSION["res"] = "<p>CHEAT: Current number is: <b>{$_SESSION["game"]->number()}</b></p>";
+    $_SESSION["res"] = "CHEAT: Current number is: <b>{$_SESSION["game"]->number()}</b>";
 
     return $app->response->redirect("guess/play");
 });
@@ -63,14 +63,14 @@ $app->router->post("guess/play", function () use ($app) {
 
     if (!$game->gameOver()) {
         try {
-            $res = "<p>Your guess $guess is <b>{$game->makeGuess($guess)}</b></p>";
+            $res = "Your guess $guess is <b>{$game->makeGuess($guess)}</b>";
             if ($game->gameOver()) {
-                $res .= "\n<p>The game is over, hit \"Restart\" to play again</p>";
+                $res .= ". The game is over, click \"Restart\" to play again.";
             }
         } catch (Peo\Guess\GuessException $e) {
-            $res = "<p><b>{$e->getMessage()}</b></p>";
+            $res = "<b>{$e->getMessage()}</b>";
         } catch (TypeError $e) {
-            $res = "<p><b>Guess must be an integer</b></p>";
+            $res = "<b>Guess must be an integer</b>";
         }
     }
     // Update session
