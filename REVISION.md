@@ -1,6 +1,11 @@
 Revision history
 ==================
 
+
+v2.0.4 (2019-04-14)
+------------------------
+* Ready with kmom02, including report.
+
 v2.0.3 (2019-04-10)
 ------------------------
 * Ready with phpdoc
