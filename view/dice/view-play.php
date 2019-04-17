@@ -33,12 +33,18 @@ will be decided and done by the computer automatically.</p>
 </table>
 </div>
 
+
+
 <?php if (!$res) : ?>
     <div class="game">
         <a class="button" href="play-throw">Throw</a>
         <a class="button" href="play-stop">Ready</a>
+    </div>
+<?php elseif ($res === "Lost") : ?>
+    <div class="game">
         <a class="button" href="play-next">Next player</a>
     </div>
+    <p class="dice game">You got a '1', your points are lost!</p>
 <?php elseif ($res === "Tie") : ?>
     <p class="game">It is a tie, throw again!</p>
     <div class="game">
@@ -50,3 +56,4 @@ will be decided and done by the computer automatically.</p>
         <a class="button" href="start-game">Start the game</a>
     </div>
 <?php endif; ?>
+<p class="dice game">Current sum: <?= $sumCurrent ?></p>

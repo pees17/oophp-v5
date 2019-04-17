@@ -136,7 +136,6 @@ $app->router->get("dice/start-restart", function () use ($app) {
  * status of the play.
  */
 $app->router->get("dice/start-game", function () use ($app) {
-    $title = "Dice 100 game";
 
     // Get game from session
     $game = $_SESSION["game"] ?? null;
@@ -153,13 +152,33 @@ $app->router->get("dice/start-game", function () use ($app) {
 
     // Update session
     $_SESSION["game"] = $game;
+    $_SESSION["res"] = null;
+    $_SESSION["round"] = 1;
+
+    // View the game
+    return $app->response->redirect("dice/play-view");
+});
+
+/**
+ * Playing the game - Show game status
+ */
+$app->router->get("dice/play-view", function () use ($app) {
+    $title = "Dice 100 game";
+
+    // Get game and data from session
+    $game = $_SESSION["game"] ?? null;
+    $res = $_SESSION["res"] ?? null;
+    $dices = $_SESSION["dices"] ?? null;
+    $round = $_SESSION["round"] ?? null;
 
     // Render view
     $data = [
+        "dices" => $dices,
         "players" => $game->getPlayers(),
         "current" => $game->getCurrentPlayer(),
-        "res" => null,
-        "round" => 1
+        "sumCurrent" => $game->getSumCurrent(),
+        "res" => $res,
+        "round" => $round
     ];
 
     $app->page->add("dice/view-play", $data);
@@ -167,4 +186,28 @@ $app->router->get("dice/start-game", function () use ($app) {
     return $app->page->render([
         "title" => $title,
     ]);
+});
+
+/**
+ * Playing the game - Throwing dices
+ */
+$app->router->get("dice/play-throw", function () use ($app) {
+    // Get game from session
+    $game = $_SESSION["game"] ?? null;
+
+    // Throw a dice
+    $dices = $game->roll();
+
+    // Check if a '1' has been thrown
+    $res = null;
+    if ($game->checkOne()) {
+        $res = "Lost";
+    }
+
+    // Update session
+    $_SESSION["game"] = $game;
+    $_SESSION["res"] = $res;
+    $_SESSION["dices"] = $dices;
+
+    return $app->response->redirect("dice/play-view");
 });

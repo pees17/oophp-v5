@@ -11,12 +11,14 @@ class Game
     * @var string $current  The name of the current player
     * @var int $sumCurrent  The sum of the rolls in current round for current player
     * @var int $nrDices     The number of dices to use in a roll
+    * @var int $lastHand    Array with the values from the last roll
     * @var int WIN          The nunber of points to win the game
      */
     private $players;
     private $current;
     private $sumCurrent;
     private $nrDices;
+    private $lastHand;
 
     const WIN = 100;
 
@@ -59,7 +61,26 @@ class Game
         $diceHand = new DiceHand($this->nrDices);
         $diceHand->roll();
         $this->sumCurrent += $diceHand->getSum();
-        return $diceHand->getValues();
+        $this->lastHand = $diceHand->getValues();
+        return $this->lastHand;
+    }
+
+
+    /**
+     * Checks if the last roll of dices had a '1'.
+     * If there is a '1' the $sumCurrent is cleared
+     *
+     * @return bool True if the last hand had a '1'.
+     */
+    public function checkOne() : bool
+    {
+        foreach ($this->lastHand as $dice) {
+            if ($dice == 1) {
+                $this->sumCurrent = 0;
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -95,6 +116,17 @@ class Game
     public function getCurrentPlayer() : string
     {
         return $this->current;
+    }
+
+
+    /**
+     * Get the sum of the current round
+     *
+     * @return int The sum
+     */
+    public function getSumCurrent() : int
+    {
+        return $this->sumCurrent;
     }
 
 
