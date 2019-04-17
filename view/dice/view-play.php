@@ -11,14 +11,18 @@ namespace Anax\View;
 
 ?><h1>Dice 100 game</h1>
 
-<p>First all players need to throw one dice each to decide who shall start.
-Highest dice starts, and then the others follow in descending order.</p>
+<p>All players plays a round and after each round an evaluation is done to see if we have a winner.
+If one of the players name is "Computer", then the number of throws in each row for that player
+will be decided and done by the computer automatically.</p>
+
+<p class="dice game">Round: <?= $round ?></p>
+<p class="dice game">Player: <?= $current ?></p>
 
 <div class="game-container">
 <table class="game dices">
 <tr>
     <th class="left">Player</td>
-    <th class="center">Dice</td>
+    <th class="center">Points</td>
 </tr>
 <?php foreach ($players as $player => $points) : ?>
 <tr>
@@ -31,7 +35,9 @@ Highest dice starts, and then the others follow in descending order.</p>
 
 <?php if (!$res) : ?>
     <div class="game">
-        <a class="button" href="start-throw">Throw dice</a>
+        <a class="button" href="play-throw">Throw</a>
+        <a class="button" href="play-stop">Ready</a>
+        <a class="button" href="play-next">Next player</a>
     </div>
 <?php elseif ($res === "Tie") : ?>
     <p class="game">It is a tie, throw again!</p>

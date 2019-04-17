@@ -50,8 +50,8 @@ $app->router->post("dice/get-names", function () use ($app) {
     // Get post variables
     $players = $_POST["players"] ?? null;
 
-    // Create the game
-    $game = new Peo\Dice\Game($players);
+    // Create the game, with one dice
+    $game = new Peo\Dice\Game($players, 1);
 
     // Update session
     $_SESSION["game"] = $game;
@@ -92,10 +92,9 @@ $app->router->get("dice/start-throw", function () use ($app) {
     // Get game from session
     $game = $_SESSION["game"] ?? null;
 
-    // Throw a dice and update the game
-    $dice = new Peo\Dice\Dice();
-    $points = $dice->roll();
-    $game->addPoints($points);
+    // Throw a dice and update the points with the result
+    $game->roll();
+    $game->addPoints();
 
     // Check if all players has thrown a dice
     $res = null;
@@ -141,6 +140,7 @@ $app->router->get("dice/start-game", function () use ($app) {
 
     // Get game from session
     $game = $_SESSION["game"] ?? null;
+    $nrDices = $_SESSION["nrDices"] ?? null;
 
     // Sort the players in start order, initialize the points for all
     // players to null, and reset current to first player
@@ -148,16 +148,19 @@ $app->router->get("dice/start-game", function () use ($app) {
     $game->resetPoints();
     $game->resetCurrent();
 
+    // Set number of dices to use in the game
+    $game->setNrDices($nrDices);
+
     // Update session
     $_SESSION["game"] = $game;
 
     // Render view
     $data = [
         "players" => $game->getPlayers(),
-        "res" => null
+        "current" => $game->getCurrentPlayer(),
+        "res" => null,
+        "round" => 1
     ];
-    var_dump($game);
-    die();
 
     $app->page->add("dice/view-play", $data);
 
