@@ -2,8 +2,7 @@
 namespace Anax\View;
 
 /**
- * Render the view to show the status of the start phase and
- * handle the throwing of dices to decide the start order
+ * Render the view to show the status of the game
  */
 
 // Show incoming variables and view helper functions
@@ -33,8 +32,6 @@ will be decided and done by the computer automatically.</p>
 </table>
 </div>
 
-
-
 <?php if (!$res) : ?>
     <div class="game">
         <a class="button" href="play-throw">Throw</a>
@@ -57,3 +54,14 @@ will be decided and done by the computer automatically.</p>
     </div>
 <?php endif; ?>
 <p class="dice game">Current sum: <?= $sumCurrent ?></p>
+
+<div>
+    <p class="dice game">Player throws:</p>
+    <?php foreach ($dices as $hand) : ?>
+        <p class="dice-utf8">
+        <?php foreach ($hand as $dice) : ?>
+            <i class="<?= $dice ?>"></i>
+        <?php endforeach; ?>
+        </p>
+    <?php endforeach; ?>
+</div>

@@ -7,7 +7,7 @@ namespace Peo\Dice;
 class DiceHand
 {
     /**
-     * @var Dice $dices   Array consisting of dices.
+     * @var DiceGraphic $dices   Array consisting of dices.
      * @var int  $values  Array consisting of last roll of the dices.
      */
     private $dices;
@@ -23,7 +23,7 @@ class DiceHand
         $this->dices  = [];
         $this->values = [];
         for ($i = 0; $i < $nrDices; $i++) {
-            $this->dices[] = new Dice();
+            $this->dices[] = new DiceGraphic();
         }
     }
 

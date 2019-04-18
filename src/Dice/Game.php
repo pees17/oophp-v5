@@ -54,15 +54,29 @@ class Game
     /**
      * Roll a hand of dices and adds the result to $sumCurrent
      *
-     * @return int Array with the value of the dices
+     * @return void
      */
-    public function roll() : array
+    public function roll() : void
     {
         $diceHand = new DiceHand($this->nrDices);
         $diceHand->roll();
         $this->sumCurrent += $diceHand->getSum();
         $this->lastHand = $diceHand->getValues();
-        return $this->lastHand;
+    }
+
+
+    /**
+     * Gets the graphic representation of the last hand of dices
+     *
+     * @return string Array with the graphic representation of the dices
+     */
+    public function getGraphicHand() : array
+    {
+        $graphHand = [];
+        foreach ($this->lastHand as $dice) {
+            $graphHand[] = ("dice-" . $dice);
+        }
+        return $graphHand;
     }
 
 
@@ -192,13 +206,13 @@ class Game
 
 
     /**
-     * Resets the points for all players to null
+     * Sets the points for all players to 0
      *
      * @return void
      */
     public function resetPoints() : void
     {
-        $this->players = array_fill_keys(array_keys($this->players), null);
+        $this->players = array_fill_keys(array_keys($this->players), 0);
     }
 
 

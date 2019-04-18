@@ -154,6 +154,7 @@ $app->router->get("dice/start-game", function () use ($app) {
     $_SESSION["game"] = $game;
     $_SESSION["res"] = null;
     $_SESSION["round"] = 1;
+    $_SESSION["dices"] = [];
 
     // View the game
     return $app->response->redirect("dice/play-view");
@@ -194,9 +195,11 @@ $app->router->get("dice/play-view", function () use ($app) {
 $app->router->get("dice/play-throw", function () use ($app) {
     // Get game from session
     $game = $_SESSION["game"] ?? null;
+    $dices = $_SESSION["dices"];
 
-    // Throw a dice
-    $dices = $game->roll();
+    // Throw a dice hand, and get the graphic representation
+    $game->roll();
+    $dices[] = $game->getGraphicHand();
 
     // Check if a '1' has been thrown
     $res = null;

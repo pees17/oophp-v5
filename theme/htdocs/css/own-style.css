@@ -103,3 +103,32 @@ table.game tr .left {
 table.game tr .center {
   text-align: center;
 }
+/**
+ * Style a dice using UTF-8 characters.
+ */
+.dice-utf8 .dice-1::after {
+  content: "\2680";
+}
+.dice-utf8 .dice-2::after {
+  content: "\2681";
+}
+.dice-utf8 .dice-3::after {
+  content: "\2682";
+}
+.dice-utf8 .dice-4::after {
+  content: "\2683";
+}
+.dice-utf8 .dice-5::after {
+  content: "\2684";
+}
+.dice-utf8 .dice-6::after {
+  content: "\2685";
+}
+.dice-utf8 {
+  font-size: 36px;
+  margin: 0;
+  line-height: 1;
+}
+.dice-utf8 i {
+  font-style: normal;
+}
