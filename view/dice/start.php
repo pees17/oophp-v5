@@ -39,7 +39,7 @@ Highest dice starts, and then the others follow in descending order.</p>
         <a class="button" href="start-restart">Throw dice</a>
     </div>
 <?php else : ?>
-    <p class="game"><?= $res ?></p>
+    <p class="game"><?= $res . " has the highest dice and will play first!"?></p>
     <div class="game">
         <a class="button" href="start-game">Start the game</a>
     </div>

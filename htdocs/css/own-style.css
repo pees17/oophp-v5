@@ -72,11 +72,19 @@ form.game input[type="submit"] {
 .game a.button:hover {
   background: #444;
 }
+.game a.button.dice {
+  margin-top: 1em;
+}
 p.game {
   margin-top: 12px;
 }
 p.game.dice {
   margin: 0;
+}
+p.game.dice.winner {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-top: 1em;
 }
 .game-container::after {
   content: "";
@@ -131,4 +139,11 @@ table.game tr .center {
 }
 .dice-utf8 i {
   font-style: normal;
+}
+.game_col1 {
+  float: left;
+  margin-right: 4em;
+}
+.game_col2 {
+  float: left;
 }

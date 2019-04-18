@@ -87,6 +87,10 @@ form.game {
     &:hover {
         background: #444;
     }
+
+    &.dice {
+        margin-top: 1em;
+    }
 }
 
 p.game {
@@ -95,6 +99,12 @@ p.game {
 
 p.game.dice {
     margin: 0;
+}
+
+p.game.dice.winner {
+    font-size: 1.25em;
+    font-weight: 600;
+    margin-top: 1em;
 }
 
 .game-container {
@@ -146,6 +156,16 @@ table.game {
 .dice-utf8 i {
     font-style: normal;
 }
+
+.game_col1 {
+    float: left;
+    margin-right: 4em;;
+}
+
+.game_col2 {
+    float: left;
+}
+
 
 // /**
 //  * A responsive menu.

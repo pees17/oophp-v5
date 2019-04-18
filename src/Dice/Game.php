@@ -172,11 +172,11 @@ class Game
 
 
     /**
-     * Returns a string telling if there is a highest score
+     * Returns the name of the player with the highest score
      *
-     * @return string The result
+     * @return string name, or null if no single player with highest score
      */
-    public function getHighest() : string
+    public function getHighest()
     {
         $max = 0;
         $nextMax = 0;
@@ -188,11 +188,25 @@ class Game
             }
         }
         if ($max > $nextMax) {
-            return "$maxPlayer has the highest dice and will play first!";
+            return $maxPlayer;
         }
-        return "Tie";
+        return null;
     }
 
+    /**
+     * Returns a string with the name of the winner, if any
+     *
+     * @return string The name if there is a winner, otherwise null.
+     */
+    public function checkWinner()
+    {
+        if ($winner = $this->getHighest()) {
+            if ($this->players[$winner] >= self::WIN) {
+                return $winner;
+            }
+        }
+        return null;
+    }
 
     /**
      * Sort $players in descending order by value

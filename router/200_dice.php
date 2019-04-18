@@ -99,7 +99,8 @@ $app->router->get("dice/start-throw", function () use ($app) {
     // Check if all players has thrown a dice
     $res = null;
     if ($game->lastPlayer()) {
-        $res = $game->getHighest();
+        // Get the player with the highest score
+        $res = $game->getHighest() ?? "Tie";
     }
 
     // Advance current player with one
@@ -153,6 +154,7 @@ $app->router->get("dice/start-game", function () use ($app) {
     // Update session
     $_SESSION["game"] = $game;
     $_SESSION["res"] = null;
+    $_SESSION["state"] = "Throw";
     $_SESSION["round"] = 1;
     $_SESSION["dices"] = [];
 
@@ -169,6 +171,7 @@ $app->router->get("dice/play-view", function () use ($app) {
     // Get game and data from session
     $game = $_SESSION["game"] ?? null;
     $res = $_SESSION["res"] ?? null;
+    $state = $_SESSION["state"] ?? null;
     $dices = $_SESSION["dices"] ?? null;
     $round = $_SESSION["round"] ?? null;
 
@@ -179,6 +182,7 @@ $app->router->get("dice/play-view", function () use ($app) {
         "current" => $game->getCurrentPlayer(),
         "sumCurrent" => $game->getSumCurrent(),
         "res" => $res,
+        "state" => $state,
         "round" => $round
     ];
 
@@ -195,7 +199,8 @@ $app->router->get("dice/play-view", function () use ($app) {
 $app->router->get("dice/play-throw", function () use ($app) {
     // Get game from session
     $game = $_SESSION["game"] ?? null;
-    $dices = $_SESSION["dices"];
+    $dices = $_SESSION["dices"] ?? null;
+    $state = $_SESSION["state"] ?? null;
 
     // Throw a dice hand, and get the graphic representation
     $game->roll();
@@ -204,13 +209,92 @@ $app->router->get("dice/play-throw", function () use ($app) {
     // Check if a '1' has been thrown
     $res = null;
     if ($game->checkOne()) {
-        $res = "Lost";
+        $state = "Lost";
+        // If last player in round, check for winner
+        if ($game->lastPlayer()) {
+            $res = $game->checkWinner();
+        }
     }
 
     // Update session
     $_SESSION["game"] = $game;
     $_SESSION["res"] = $res;
+    $_SESSION["state"] = $state;
     $_SESSION["dices"] = $dices;
 
+    return $app->response->redirect("dice/play-view");
+});
+
+/**
+ * Playing the game - Stop throwing
+ */
+$app->router->get("dice/play-stop", function () use ($app) {
+    // Get game from session
+    $game = $_SESSION["game"] ?? null;
+
+    // Update the points with the result
+    $game->addPoints();
+
+    // If last player in round, check for winner
+    $res = null;
+    if ($game->lastPlayer()) {
+        $res = $game->checkWinner();
+    }
+
+    // Update session
+    $_SESSION["game"] = $game;
+    $_SESSION["res"] = $res;
+    $_SESSION["state"] = "Ready";
+    $_SESSION["dices"] = [];
+
+    return $app->response->redirect("dice/play-view");
+});
+
+
+/**
+ * Playing the game - Next player
+ */
+$app->router->get("dice/play-next", function () use ($app) {
+    // Get game from session
+    $game = $_SESSION["game"] ?? null;
+
+    // If last player => Update round
+    if ($game->lastPlayer()) {
+        $_SESSION["round"] += 1;
+    }
+
+    // Advance current player with one
+    $game->advanceCurrent();
+
+    // Update session
+    $_SESSION["game"] = $game;
+    $_SESSION["res"] = null;
+    $_SESSION["state"] = "Throw";
+    $_SESSION["dices"] = [];
+
+    // return $app->response->redirect("dice/play-view");
+    return $app->response->redirect("dice/play-throw");
+});
+
+/**
+ * Playing the game - New game
+ */
+$app->router->get("dice/play-again", function () use ($app) {
+    // Get game from session
+    $game = $_SESSION["game"] ?? null;
+
+    // Initialize the points for all players to null,
+    // and reset current to first player
+    $game->resetPoints();
+    $game->resetCurrent();
+
+    // Update session
+    $_SESSION["game"] = $game;
+    $_SESSION["res"] = null;
+    $_SESSION["state"] = "Throw";
+    $_SESSION["round"] = 1;
+    $_SESSION["dices"] = [];
+
+    // View the game
     return $app->response->redirect("dice/play-view");
 });
