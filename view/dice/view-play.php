@@ -10,8 +10,9 @@ namespace Anax\View;
 ?><h1>Dice 100 game</h1>
 
 <p>All players plays a round and after each round an evaluation is done to see if we have a winner.
-If one of the players name is "Computer", then the number of throws in each row for that player
+If one of the players name is "Computer", then the number of throws in each round for that player
 will be decided and done by the computer automatically.</p>
+
 <div class="game-container">
 <div class="game_col1">
 
@@ -35,8 +36,9 @@ will be decided and done by the computer automatically.</p>
 
 </div>
 
-<?php if ($dices) : ?>
 <div class="game_col2">
+
+<?php if ($dices) : ?>
     <p class="dice game">Player <?= $current ?> throws:</p>
     <?php foreach ($dices as $hand) : ?>
         <p class="dice-utf8">
@@ -49,12 +51,15 @@ will be decided and done by the computer automatically.</p>
     <?php if ($state === "Lost") : ?>
         <p class="dice game">You got a '1', your points are lost!</p>
     <?php endif; ?>
-    <?php if ($res) : ?>
-        <p class="dice game winner">The winner is <?= $res ?>!!!</p>
-    <?php endif; ?>
-</div>
 <?php endif; ?>
+
+<?php if ($res) : ?>
+    <p class="dice game winner">The winner is <?= $res ?>!!!</p>
+<?php endif; ?>
+
 </div>
+</div>
+
 <?php if ($res) : ?>
     <div class="game">
         <a class="button dice" href="play-again">Play again</a>
