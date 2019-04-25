@@ -33,6 +33,16 @@ class Game
         $this->nrDices = $nrDices;
     }
 
+    /**
+     * Get the number of dices. Only needed for module test
+     *
+     * @return int The number of dices
+     */
+    public function getNrDices() : int
+    {
+        return $this->nrDices;
+    }
+
 
     /**
      * Roll a hand of dices and adds the result to $sumCurrent
