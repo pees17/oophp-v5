@@ -29,9 +29,19 @@ $app->router->post("dice/init", function () use ($app) {
     $name = $_POST["name"] ?? null;
     $nrDices = $_POST["nrDices"] ?? null;
 
+    // Simple AI
+    if ($nrDices == 1) {
+        $computerThrows = 3;
+    } elseif ($nrDices == 2) {
+        $computerThrows = 2;
+    } else {
+        $computerThrows = 1;
+    }
+
     // Update session
     $_SESSION["name"] = $name;
     $_SESSION["nrDices"] = $nrDices;
+    $_SESSION["computerThrows"] = $computerThrows;
 
     return $app->response->redirect("dice/start-game");
 });
@@ -186,15 +196,14 @@ $app->router->get("dice/play-stop", function () use ($app) {
  * Playing the game - Special route for computer throwing
  */
 $app->router->get("dice/play-computer", function () use ($app) {
-    // Get game from session.
+    // Get from session.
     $game = $_SESSION["game"] ?? null;
+    $computerThrows = $_SESSION["computerThrows"] ?? null;
 
     $dices = [];
     $state = "Ready";
 
-    $nrThrows = 2;
-
-    while ($nrThrows > 0) {
+    while ($computerThrows > 0) {
         // Throw a dice hand, and get the graphic representation
         $game->roll();
         $dices[] = $game->getGraphicHand();
@@ -205,11 +214,10 @@ $app->router->get("dice/play-computer", function () use ($app) {
 
             break;  // Break out of while loop
         }
-        $nrThrows -= 1;
+        $computerThrows -= 1;
     }
     // Update the points with the result
     $game->addPoints("Computer");
-
 
     // Check for winner
     $winner = $game->checkWinner();

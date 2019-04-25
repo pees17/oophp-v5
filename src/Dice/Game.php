@@ -18,7 +18,7 @@ class Game
     private $sumCurrent = 0;
     private $lastHand = [];
 
-    const WIN = 40;
+    const WIN = 100;
 
     /**
      * Constructor to create a Game with a number of players
