@@ -45,19 +45,18 @@ form.game input[type="number"] {
   padding-left: 2px;
   height: 22px;
 }
-form.game input[type="number"]#nrDices {
-  margin-left: 17px;
-  margin-bottom: 20px;
+form.game input[type="submit"] {
+  min-width: 75px;
 }
 form.game.dices input[type="submit"] {
   margin-top: 20px;
 }
-form.game.dices input[type="text"] {
-  width: 200px;
-  height: 22px;
+form.game.dices input[type="number"] {
+  width: 84px;
 }
-form.game input[type="submit"] {
-  min-width: 75px;
+form.game.dices input[type="text"] {
+  width: 150px;
+  height: 22px;
 }
 .game a.button {
   min-width: 80px;
