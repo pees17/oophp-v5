@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v3.0.5 (2019-04-25)
+------------------------
+* Ready with kmom03, including report.
+
 v3.0.4 (2019-04-25)
 ------------------------
 * Ready with dicegame 100 including unit tests.
