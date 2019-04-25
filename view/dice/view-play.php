@@ -1,6 +1,8 @@
 <?php
 namespace Anax\View;
 
+$pointsOffset = ($state === "Throw") ? $sumCurrent : 0;
+
 /**
  * Render the view to show the status of the game
  */
@@ -17,7 +19,7 @@ will be decided and done by the computer automatically.</p>
 <div class="game_col1">
 
 <p class="dice game">Round: <?= $round ?></p>
-<p class="dice game">Player: <?= $current ?></p>
+<p class="dice game">Current player: <?= $current ?></p>
 
 <table class="game dices">
 <tr>
@@ -27,40 +29,12 @@ will be decided and done by the computer automatically.</p>
 <?php foreach ($players as $player => $points) : ?>
 <tr>
     <td class="left"><?= $player ?></td>
-    <td class="center"><?= $points ?></td>
+    <td class="center"><?= $points + (($player === $current) ? $pointsOffset : 0) ?></td>
 </tr>
 <?php endforeach; ?>
 </table>
 
-<p class="dice game">Current sum: <?= $sumCurrent ?></p>
-
-</div>
-
-<div class="game_col2">
-
-<?php if ($dices) : ?>
-    <p class="dice game">Player <?= $current ?> throws:</p>
-    <?php foreach ($dices as $hand) : ?>
-        <p class="dice-utf8">
-        <?php foreach ($hand as $dice) : ?>
-            <i class="<?= $dice ?>"></i>
-        <?php endforeach; ?>
-        </p>
-    <?php endforeach; ?>
-
-    <?php if ($state === "Lost") : ?>
-        <p class="dice game">You got a '1', your points are lost!</p>
-    <?php endif; ?>
-<?php endif; ?>
-
-<?php if ($res) : ?>
-    <p class="dice game winner">The winner is <?= $res ?>!!!</p>
-<?php endif; ?>
-
-</div>
-</div>
-
-<?php if ($res) : ?>
+<?php if ($winner) : ?>
     <div class="game">
         <a class="button dice" href="play-again">Play again</a>
         <a class="button dice" href="init">Re-Initialize</a>
@@ -75,3 +49,30 @@ will be decided and done by the computer automatically.</p>
         <a class="button dice" href="play-next">Throw next</a>
     </div>
 <?php endif; ?>
+
+</div>
+
+<div class="game_col2">
+
+<?php if ($dices) : ?>
+    <p class="dice game"><?= $current ?> throws:</p>
+    <?php foreach ($dices as $hand) : ?>
+        <p class="dice-utf8">
+        <?php foreach ($hand as $dice) : ?>
+            <i class="<?= $dice ?>"></i>
+        <?php endforeach; ?>
+        </p>
+    <?php endforeach; ?>
+
+<p class="dice game">
+    <?= $state === "Lost" ? "$current got a '1', the points are lost!" : "Current sum: $sumCurrent" ?>
+</p>
+
+<?php endif; ?>
+
+<?php if ($winner) : ?>
+    <p class="dice game winner">The winner is <?= $winner ?>!!!</p>
+<?php endif; ?>
+
+</div>
+</div>

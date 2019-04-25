@@ -16,11 +16,11 @@ class Game
      */
     private $players;
     private $current;
-    private $sumCurrent;
+    private $sumCurrent = 0;
     private $nrDices;
-    private $lastHand;
+    private $lastHand = [];
 
-    const WIN = 100;
+    const WIN = 20;
 
     /**
      * Constructor to create a Game with a number of players
@@ -33,7 +33,6 @@ class Game
             $this->players[$player] = null;    // Add players with no points
         }
         $this->current = $players[0];          // Current player is first player
-        $this->sumCurrent = 0;
 
         $this->setNrDices($nrDices);
     }
@@ -99,15 +98,13 @@ class Game
 
 
     /**
-     * Takes the points in $sumCurrent and adds to the current player
-     * and then sets the $sumCurrent to 0
+     * Takes the points in $sumCurrent and adds to the current player.
      *
      * @return void.
      */
     public function addPoints() : void
     {
         $this->players[$this->current] += $this->sumCurrent;
-        $this->sumCurrent = 0;
     }
 
 
@@ -143,6 +140,15 @@ class Game
         return $this->sumCurrent;
     }
 
+    /**
+     * Sets sumCurrent to 0.
+     *
+     * @return void
+     */
+    public function resetSumCurrent() : void
+    {
+        $this->sumCurrent = 0;
+    }
 
     /**
      * Get all players, names and points

@@ -18,7 +18,7 @@ $app->router->get("dice/init", function () use ($app) {
 });
 
 /**
- * Get number of players and number of dices from $_POST and then render view
+ * Get number of players and number of dices from  and then render view
  * to get the players names
  */
 $app->router->post("dice/init", function () use ($app) {
@@ -95,6 +95,7 @@ $app->router->get("dice/start-throw", function () use ($app) {
     // Throw a dice and update the points with the result
     $game->roll();
     $game->addPoints();
+    $game->resetSumCurrent();
 
     // Check if all players has thrown a dice
     $res = null;
@@ -137,9 +138,11 @@ $app->router->get("dice/start-restart", function () use ($app) {
  * status of the play.
  */
 $app->router->get("dice/start-game", function () use ($app) {
-
-    // Get game from session
-    $game = $_SESSION["game"] ?? null;
+    // Get game from session. If session has timed out, restart game
+    if (!($game = $_SESSION["game"] ?? null)) {
+        return $app->response->redirect("dice/init");
+    }
+    // Get variables from session
     $nrDices = $_SESSION["nrDices"] ?? null;
 
     // Sort the players in start order, initialize the points for all
@@ -153,7 +156,7 @@ $app->router->get("dice/start-game", function () use ($app) {
 
     // Update session
     $_SESSION["game"] = $game;
-    $_SESSION["res"] = null;
+    $_SESSION["winner"] = null;
     $_SESSION["state"] = "Throw";
     $_SESSION["round"] = 1;
     $_SESSION["dices"] = [];
@@ -170,7 +173,7 @@ $app->router->get("dice/play-view", function () use ($app) {
 
     // Get game and data from session
     $game = $_SESSION["game"] ?? null;
-    $res = $_SESSION["res"] ?? null;
+    $winner = $_SESSION["winner"] ?? null;
     $state = $_SESSION["state"] ?? null;
     $dices = $_SESSION["dices"] ?? null;
     $round = $_SESSION["round"] ?? null;
@@ -181,7 +184,7 @@ $app->router->get("dice/play-view", function () use ($app) {
         "players" => $game->getPlayers(),
         "current" => $game->getCurrentPlayer(),
         "sumCurrent" => $game->getSumCurrent(),
-        "res" => $res,
+        "winner" => $winner,
         "state" => $state,
         "round" => $round
     ];
@@ -197,28 +200,36 @@ $app->router->get("dice/play-view", function () use ($app) {
  * Playing the game - Throwing dices
  */
 $app->router->get("dice/play-throw", function () use ($app) {
-    // Get game from session
-    $game = $_SESSION["game"] ?? null;
+    // Get game from session. If session has timed out, restart game
+    if (!($game = $_SESSION["game"] ?? null)) {
+        return $app->response->redirect("dice/init");
+    }
+    // If player is 'Computer' redirect to special Computer route
+    if ($game->getCurrentPlayer() === "Computer") {
+        return $app->response->redirect("dice/play-computer");
+    }
+
+    // Get variables from session
     $dices = $_SESSION["dices"] ?? null;
     $state = $_SESSION["state"] ?? null;
+    $winner = $_SESSION["winner"] ?? null;
 
     // Throw a dice hand, and get the graphic representation
     $game->roll();
     $dices[] = $game->getGraphicHand();
 
     // Check if a '1' has been thrown
-    $res = null;
     if ($game->checkOne()) {
         $state = "Lost";
         // If last player in round, check for winner
         if ($game->lastPlayer()) {
-            $res = $game->checkWinner();
+            $winner = $game->checkWinner();
         }
     }
 
     // Update session
     $_SESSION["game"] = $game;
-    $_SESSION["res"] = $res;
+    $_SESSION["winner"] = $winner;
     $_SESSION["state"] = $state;
     $_SESSION["dices"] = $dices;
 
@@ -226,26 +237,75 @@ $app->router->get("dice/play-throw", function () use ($app) {
 });
 
 /**
- * Playing the game - Stop throwing
+ * Playing the game - Stop throwing dices
  */
 $app->router->get("dice/play-stop", function () use ($app) {
-    // Get game from session
-    $game = $_SESSION["game"] ?? null;
-
+    // Get game from session. If session has timed out, restart game
+    if (!($game = $_SESSION["game"] ?? null)) {
+        return $app->response->redirect("dice/init");
+    }
     // Update the points with the result
     $game->addPoints();
 
     // If last player in round, check for winner
-    $res = null;
+    $winner = null;
     if ($game->lastPlayer()) {
-        $res = $game->checkWinner();
+        $winner = $game->checkWinner();
     }
 
     // Update session
     $_SESSION["game"] = $game;
-    $_SESSION["res"] = $res;
+    $_SESSION["winner"] = $winner;
     $_SESSION["state"] = "Ready";
-    $_SESSION["dices"] = [];
+
+    if ($winner) {
+        return $app->response->redirect("dice/play-view");
+    }
+    return $app->response->redirect("dice/play-next");
+});
+
+/**
+ * Playing the game - Special route for computer throwing
+ */
+$app->router->get("dice/play-computer", function () use ($app) {
+    // Get game from session. If session has timed out, restart game
+    if (!($game = $_SESSION["game"] ?? null)) {
+        return $app->response->redirect("dice/init");
+    }
+
+    $dices = [];
+    $state = "Ready";
+
+    $nrThrows = 2;
+
+    while ($nrThrows > 0) {
+        // Throw a dice hand, and get the graphic representation
+        $game->roll();
+        $dices[] = $game->getGraphicHand();
+
+        // Check if a '1' has been thrown
+        if ($game->checkOne()) {
+            $state = "Lost";
+
+            break;  // Break out of while loop
+        }
+        $nrThrows -= 1;
+    }
+    // Update the points with the result
+    $game->addPoints();
+
+    // If last player in round, check for winner
+    $winner = $_SESSION["winner"] ?? null;
+    if ($game->lastPlayer()) {
+        $winner = $game->checkWinner();
+    }
+
+    // Update session
+    $_SESSION["game"] = $game;
+    $_SESSION["winner"] = $winner;
+    $_SESSION["state"] = $state;
+    $_SESSION["dices"] = $dices;
+
 
     return $app->response->redirect("dice/play-view");
 });
@@ -255,24 +315,26 @@ $app->router->get("dice/play-stop", function () use ($app) {
  * Playing the game - Next player
  */
 $app->router->get("dice/play-next", function () use ($app) {
-    // Get game from session
-    $game = $_SESSION["game"] ?? null;
+    // Get game from session. If session has timed out, restart game
+    if (!($game = $_SESSION["game"] ?? null)) {
+        return $app->response->redirect("dice/init");
+    }
 
-    // If last player => Update round
+    // If last player in round, update round
     if ($game->lastPlayer()) {
         $_SESSION["round"] += 1;
     }
-
     // Advance current player with one
     $game->advanceCurrent();
 
+    // Set sumCurrent to 0
+    $game->resetSumCurrent();
+
     // Update session
     $_SESSION["game"] = $game;
-    $_SESSION["res"] = null;
     $_SESSION["state"] = "Throw";
     $_SESSION["dices"] = [];
 
-    // return $app->response->redirect("dice/play-view");
     return $app->response->redirect("dice/play-throw");
 });
 
@@ -280,17 +342,20 @@ $app->router->get("dice/play-next", function () use ($app) {
  * Playing the game - New game
  */
 $app->router->get("dice/play-again", function () use ($app) {
-    // Get game from session
-    $game = $_SESSION["game"] ?? null;
+    // Get game from session. If session has timed out, restart game
+    if (!($game = $_SESSION["game"] ?? null)) {
+        return $app->response->redirect("dice/init");
+    }
 
     // Initialize the points for all players to null,
     // and reset current to first player
     $game->resetPoints();
     $game->resetCurrent();
+    $game->resetSumCurrent();
 
     // Update session
     $_SESSION["game"] = $game;
-    $_SESSION["res"] = null;
+    $_SESSION["winner"] = null;
     $_SESSION["state"] = "Throw";
     $_SESSION["round"] = 1;
     $_SESSION["dices"] = [];

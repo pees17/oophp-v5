@@ -7,7 +7,7 @@ namespace Peo\Dice;
 class DiceHand
 {
     /**
-     * @var DiceGraphic $dices   Array consisting of dices.
+     * @var Dice $dices   Array consisting of dices.
      * @var int  $values  Array consisting of last roll of the dices.
      */
     private $dices;
@@ -23,7 +23,7 @@ class DiceHand
         $this->dices  = [];
         $this->values = [];
         for ($i = 0; $i < $nrDices; $i++) {
-            $this->dices[] = new DiceGraphic();
+            $this->dices[] = new Dice();
         }
     }
 
@@ -32,7 +32,7 @@ class DiceHand
      *
      * @return void
      */
-    public function roll()
+    public function roll() : void
     {
         foreach ($this->dices as $dice) {
             $this->values[] = $dice->roll();
@@ -44,7 +44,7 @@ class DiceHand
      *
      * @return array with values of the last roll.
      */
-    public function getValues()
+    public function getValues() : array
     {
         return $this->values;
     }
@@ -54,7 +54,7 @@ class DiceHand
      *
      * @return int  the sum
      */
-    public function getSum()
+    public function getSum() : int
     {
         return array_sum($this->values);
     }

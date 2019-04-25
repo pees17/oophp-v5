@@ -11,8 +11,8 @@ namespace Anax\View;
 ?><hr>
 SESSION
 <?= var_dump($_SESSION) ?>
-POST
+<!-- POST
 <?= var_dump($_POST) ?>
 GET
-<?= var_dump($_GET) ?>
+<?= var_dump($_GET) ?> -->
 <hr>
