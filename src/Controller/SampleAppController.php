@@ -1,36 +1,26 @@
 <?php
-
-namespace Anax\Controller;
-
-use Anax\Commons\ContainerInjectableInterface;
-use Anax\Commons\ContainerInjectableTrait;
-
+namespace Peo\Controller;
+use Anax\Commons\AppInjectableInterface;
+use Anax\Commons\AppInjectableTrait;
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
 // use Anax\Route\Exception\InternalErrorException;
-
 /**
  * A sample controller to show how a controller class can be implemented.
- * The controller will be injected with $di if implementing the interface
- * ContainerInjectableInterface, like this sample class does.
+ * The controller will be injected with $app if implementing the interface
+ * AppInjectableInterface, like this sample class does.
  * The controller is mounted on a particular route and can then handle all
  * requests for that mount point.
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class SampleController implements ContainerInjectableInterface
+class SampleAppController implements AppInjectableInterface
 {
-    use ContainerInjectableTrait;
-
-
-
+    use AppInjectableTrait;
     /**
      * @var string $db a sample member variable that gets initialised
      */
     private $db = "not active";
-
-
-
     /**
      * The initialize method is optional and will always be called before the
      * target method/action. This is a convienient method where you could
@@ -42,10 +32,8 @@ class SampleController implements ContainerInjectableInterface
     {
         // Use to initialise member variables.
         $this->db = "active";
+        // Use $this->app to access the framework services.
     }
-
-
-
     /**
      * This is the index method action, it handles:
      * ANY METHOD mountpoint
@@ -59,24 +47,18 @@ class SampleController implements ContainerInjectableInterface
         // Deal with the action and return a response.
         return __METHOD__ . ", \$db is {$this->db}";
     }
-
-
-
     /**
-     * This sample method dumps the content of $di.
+     * This sample method dumps the content of $app.
      * GET mountpoint/dump-app
      *
      * @return string
      */
-    public function dumpDiActionGet() : string
+    public function dumpAppActionGet() : string
     {
         // Deal with the action and return a response.
-        $services = implode(", ", $this->di->getServices());
-        return __METHOD__ . "<p>\$di contains: $services";
+        $services = implode(", ", $this->app->getServices());
+        return __METHOD__ . "<p>\$app contains: $services";
     }
-
-
-
     /**
      * Add the request method to the method name to limit what request methods
      * the handler supports.
@@ -89,9 +71,6 @@ class SampleController implements ContainerInjectableInterface
         // Deal with the action and return a response.
         return __METHOD__ . ", \$db is {$this->db}";
     }
-
-
-
     /**
      * This sample method action it the handler for route:
      * GET mountpoint/create
@@ -103,9 +82,6 @@ class SampleController implements ContainerInjectableInterface
         // Deal with the action and return a response.
         return __METHOD__ . ", \$db is {$this->db}";
     }
-
-
-
     /**
      * This sample method action it the handler for route:
      * POST mountpoint/create
@@ -117,9 +93,6 @@ class SampleController implements ContainerInjectableInterface
         // Deal with the action and return a response.
         return __METHOD__ . ", \$db is {$this->db}";
     }
-
-
-
     /**
      * This sample method action takes one argument:
      * GET mountpoint/argument/<value>
@@ -133,9 +106,6 @@ class SampleController implements ContainerInjectableInterface
         // Deal with the action and return a response.
         return __METHOD__ . ", \$db is {$this->db}, got argument '$value'";
     }
-
-
-
     /**
      * This sample method action takes zero or one argument and you can use - as a separator which will then be removed:
      * GET mountpoint/defaultargument/
@@ -152,9 +122,6 @@ class SampleController implements ContainerInjectableInterface
         // Deal with the action and return a response.
         return __METHOD__ . ", \$db is {$this->db}, got argument '$value'";
     }
-
-
-
     /**
      * This sample method action takes two typed arguments:
      * GET mountpoint/typed-argument/<string>/<int>
@@ -173,9 +140,6 @@ class SampleController implements ContainerInjectableInterface
         // Deal with the action and return a response.
         return __METHOD__ . ", \$db is {$this->db}, got string argument '$str' and int argument '$int'.";
     }
-
-
-
     /**
      * This sample method action takes a variadic list of arguments:
      * GET mountpoint/variadic/
@@ -193,12 +157,9 @@ class SampleController implements ContainerInjectableInterface
         // Deal with the action and return a response.
         return __METHOD__ . ", \$db is {$this->db}, got '" . count($value) . "' arguments: " . implode(", ", $value);
     }
-
-
-
     /**
      * Adding an optional catchAll() method will catch all actions sent to the
-     * router. YOu can then reply with an actual response or return void to
+     * router. You can then reply with an actual response or return void to
      * allow for the router to move on to next handler.
      * A catchAll() handles the following, if a specific action method is not
      * created:
