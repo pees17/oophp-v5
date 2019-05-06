@@ -1,6 +1,14 @@
 Revision history
 ==================
 
+v4.0.2 (2019-05-06)
+------------------------
+* Using framework classes instead of accessing global GET, POST and SESSION variables in the dice game.
+
+v4.0.1 (2019-05-06)
+------------------------
+* Moved dice game into a controller class.
+
 v3.0.5 (2019-04-25)
 ------------------------
 * Ready with kmom03, including report.

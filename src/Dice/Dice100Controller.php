@@ -1,7 +1,9 @@
 <?php
 namespace Peo\Dice;
+
 use Anax\Commons\AppInjectableInterface;
 use Anax\Commons\AppInjectableTrait;
+
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
 // use Anax\Route\Exception\InternalErrorException;
@@ -124,7 +126,7 @@ class Dice100Controller implements AppInjectableInterface
         $this->app->session->set("game", $game);
         $this->app->session->set("current", $name);
         $this->app->session->set("winner", null);
-        $this->app->session->set("state", "Trow");
+        $this->app->session->set("state", "Throw");
         $this->app->session->set("round", 1);
         $this->app->session->set("dices", []);
 
@@ -145,12 +147,12 @@ class Dice100Controller implements AppInjectableInterface
         $title = "Dice 100 game";
 
         // Get game and data from session
-        $game = $_SESSION["game"] ?? null;
-        $winner = $_SESSION["winner"] ?? null;
-        $state = $_SESSION["state"] ?? null;
-        $dices = $_SESSION["dices"] ?? null;
-        $round = $_SESSION["round"] ?? null;
-        $current = $_SESSION["current"] ?? null;
+        $game = $this->app->session->get("game");
+        $winner = $this->app->session->get("winner");
+        $state = $this->app->session->get("state");
+        $dices = $this->app->session->get("dices");
+        $round = $this->app->session->get("round");
+        $current = $this->app->session->get("current");
 
         // Render view
         $data = [
@@ -181,8 +183,8 @@ class Dice100Controller implements AppInjectableInterface
     public function playFirstActionGet() : object
     {
         // Get game from session. If session has timed out, restart game
-        if (!($game = $_SESSION["game"] ?? null)) {
-            return $app->response->redirect("dice100/init");
+        if (!($game = $this->app->session->get("game"))) {
+            return $this->app->response->redirect("dice100/init");
         }
 
         $state = "Throw";
@@ -192,7 +194,8 @@ class Dice100Controller implements AppInjectableInterface
         $game->resetSumCurrent();
 
         // Get variables from session
-        $name = $_SESSION["name"] ?? null;
+        $name = $this->app->session->get("name");
+        $round = $this->app->session->get("round");
 
         // Throw a dice hand, and get the graphic representation
         $game->roll();
@@ -204,11 +207,11 @@ class Dice100Controller implements AppInjectableInterface
         }
 
         // Update session
-        $_SESSION["game"] = $game;
-        $_SESSION["state"] = $state;
-        $_SESSION["dices"] = $dices;
-        $_SESSION["current"] = $name;
-        $_SESSION["round"] += 1;
+        $this->app->session->set("game", $game);
+        $this->app->session->set("current", $name);
+        $this->app->session->set("state", $state);
+        $this->app->session->set("dices", $dices);
+        $this->app->session->set("round", $round + 1);
 
         return $this->app->response->redirect("dice100/gameView");
     }
@@ -224,13 +227,13 @@ class Dice100Controller implements AppInjectableInterface
     public function playNextActionGet() : object
     {
         // Get game from session. If session has timed out, restart game
-        if (!($game = $_SESSION["game"] ?? null)) {
-            return $app->response->redirect("dice100/init");
+        if (!($game = $this->app->session->get("game"))) {
+            return $this->app->response->redirect("dice100/init");
         }
 
         // Get variables from session
-        $dices = $_SESSION["dices"] ?? null;
-        $name = $_SESSION["name"] ?? null;
+        $dices = $this->app->session->get("dices");
+        $name = $this->app->session->get("name");
 
         // Throw a dice hand, and get the graphic representation
         $game->roll();
@@ -243,10 +246,10 @@ class Dice100Controller implements AppInjectableInterface
         }
 
         // Update session
-        $_SESSION["game"] = $game;
-        $_SESSION["state"] = $state;
-        $_SESSION["dices"] = $dices;
-        $_SESSION["current"] = $name;
+        $this->app->session->set("game", $game);
+        $this->app->session->set("current", $name);
+        $this->app->session->set("state", $state);
+        $this->app->session->set("dices", $dices);
 
         return $this->app->response->redirect("dice100/gameView");
     }
@@ -262,19 +265,19 @@ class Dice100Controller implements AppInjectableInterface
     public function playStopActionGet() : object
     {
         // Get game from session. If session has timed out, restart game
-        if (!($game = $_SESSION["game"] ?? null)) {
-            return $app->response->redirect("dice100/init");
+        if (!($game = $this->app->session->get("game"))) {
+            return $this->app->response->redirect("dice100/init");
         }
 
         // Update the points with the result
-        $name = $_SESSION["name"] ?? null;
+        $name = $this->app->session->get("name");
         $game->addPoints($name);
 
         // Set sumCurrent to 0
         $game->resetSumCurrent();
 
         // Update session
-        $_SESSION["game"] = $game;
+        $this->app->session->set("game", $game);
 
         return $this->app->response->redirect("dice100/playComputer");
     }
@@ -290,8 +293,8 @@ class Dice100Controller implements AppInjectableInterface
     public function playComputerActionGet() : object
     {
         // Get from session.
-        $game = $_SESSION["game"] ?? null;
-        $computerThrows = $_SESSION["computerThrows"] ?? null;
+        $game = $this->app->session->get("game");
+        $computerThrows = $this->app->session->get("computerThrows");
 
         $dices = [];
         $state = "Ready";
@@ -316,11 +319,11 @@ class Dice100Controller implements AppInjectableInterface
         $winner = $game->checkWinner();
 
         // Update session
-        $_SESSION["game"] = $game;
-        $_SESSION["winner"] = $winner;
-        $_SESSION["state"] = $state;
-        $_SESSION["dices"] = $dices;
-        $_SESSION["current"] = "Computer";
+        $this->app->session->set("game", $game);
+        $this->app->session->set("current", "Computer");
+        $this->app->session->set("state", $state);
+        $this->app->session->set("dices", $dices);
+        $this->app->session->set("winner", $winner);
 
         return $this->app->response->redirect("dice100/gameView");
     }
