@@ -7,7 +7,7 @@ return [
         [
             "info" => "Dice 100 game.",
             "mount" => "dice100",
-            "handler" => "\Peo\Dice\Dice100Controller",
+            "handler" => "\Peo\Dice\DiceController",
         ],
     ]
 ];

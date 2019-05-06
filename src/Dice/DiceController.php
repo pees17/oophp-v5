@@ -16,7 +16,7 @@ use Anax\Commons\AppInjectableTrait;
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Dice100Controller implements AppInjectableInterface
+class DiceController implements AppInjectableInterface
 {
     use AppInjectableTrait;
     /**
