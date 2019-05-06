@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v4.0.3 (2019-05-06)
+------------------------
+* Unit testing for all methods in the dice controller.
+
 v4.0.2 (2019-05-06)
 ------------------------
 * Using framework classes instead of accessing global GET, POST and SESSION variables in the dice game.
