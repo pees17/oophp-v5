@@ -16,7 +16,7 @@ class GameCheckOneTest extends TestCase
      */
     public function testCheckOneTrue()
     {
-        $game = new Game(["Computer", "Me"], 2);
+        $game = new Game(["Computer", "Me"], 100, 2);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         // Roll the dices until a '1' is thrown
@@ -44,7 +44,7 @@ class GameCheckOneTest extends TestCase
      */
     public function testCheckOneFalse()
     {
-        $game = new Game(["Computer", "Me"], 2);
+        $game = new Game(["Computer", "Me"], 100, 2);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         // Roll the dices until a hand with no '1' is thrown

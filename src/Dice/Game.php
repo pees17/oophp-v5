@@ -60,6 +60,15 @@ class Game
         return $this->nrDices;
     }
 
+    /**
+     * Set the players name and points. Only needed for module test
+     *
+     * @return void
+     */
+    public function setPlayers(array $players) : void
+    {
+        $this->players = $players;
+    }
 
     /**
      * Roll a hand of dices and adds the result to $sumCurrent

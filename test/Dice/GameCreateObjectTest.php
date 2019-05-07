@@ -26,11 +26,25 @@ class GameCreateObjectTest extends TestCase
 
     /**
      * Construct object and verify that the object has the expected
-     * properties. Use both arguments.
+     * properties. Use two arguments.
      */
-    public function testCreateObjectBothArguments()
+    public function testCreateObjectTwoArguments()
     {
-        $game = new Game(["Computer"], 5);
+        $game = new Game(["Computer"], 100);
+        $this->assertInstanceOf("\Peo\Dice\Game", $game);
+
+        $res = $game->getNrDices();
+        $exp = 1;
+        $this->assertEquals($exp, $res);
+    }
+
+    /**
+     * Construct object and verify that the object has the expected
+     * properties. Use all arguments.
+     */
+    public function testCreateObjectAllArguments()
+    {
+        $game = new Game(["Computer"], 100, 5);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         $res = $game->getNrDices();

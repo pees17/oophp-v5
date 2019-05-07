@@ -16,7 +16,7 @@ class GameGetGraphicHandTest extends TestCase
      */
     public function testRollFiveDices()
     {
-        $game = new Game(["Computer", "Me"], 5);
+        $game = new Game(["Computer", "Me"], 100, 5);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         // Check that every roll produces correct output

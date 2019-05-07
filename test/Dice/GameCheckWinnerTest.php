@@ -15,7 +15,7 @@ class GameCheckWinnerTest extends TestCase
      */
     public function testCheckWinnerNotAt100()
     {
-        $game = new Game(["Computer", "Me"], 1);
+        $game = new Game(["Computer", "Me"], 100, 1);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         // Loop while both players are below win level
@@ -40,13 +40,13 @@ class GameCheckWinnerTest extends TestCase
      */
     public function testCheckWinnerComputer()
     {
-        $game = new Game(["Computer", "Me"], 1);
+        $game = new Game(["Computer", "Me"], 100, 1);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         $loop = true;
         while ($loop) {
             // The while loop will continue until Computer has won
-            $game = new Game(["Computer", "Me"], 1);
+            $game = new Game(["Computer", "Me"], 100, 1);
 
             // Loop until a player is at or above win level
             while ($game->getPlayers()["Computer"] < 100 &&
@@ -75,13 +75,13 @@ class GameCheckWinnerTest extends TestCase
      */
     public function testCheckWinnerMe()
     {
-        $game = new Game(["Computer", "Me"], 1);
+        $game = new Game(["Computer", "Me"], 100, 1);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         $loop = true;
         while ($loop) {
             // The while loop will continue until Me has won
-            $game = new Game(["Computer", "Me"], 1);
+            $game = new Game(["Computer", "Me"], 100, 1);
 
             // Loop until a player is at or above win level
             while ($game->getPlayers()["Computer"] < 100 &&
@@ -110,13 +110,13 @@ class GameCheckWinnerTest extends TestCase
      */
     public function testCheckWinnerTie()
     {
-        $game = new Game(["Computer", "Me"], 1);
+        $game = new Game(["Computer", "Me"], 100, 1);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         $loop = true;
         while ($loop) {
             // The while loop will continue until both players points are >= 100 and the same
-            $game = new Game(["Computer", "Me"], 1);
+            $game = new Game(["Computer", "Me"], 100, 1);
 
             // Loop until both players are at or above win level
             while ($game->getPlayers()["Computer"] < 100 ||

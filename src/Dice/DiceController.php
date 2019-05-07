@@ -74,7 +74,6 @@ class DiceController implements AppInjectableInterface
         $name = $this->app->request->getPost("name");
         $nrDices = $this->app->request->getPost("nrDices");
 
-
         // Update session
         $this->app->session->set("name", $name);
         $this->app->session->set("nrDices", $nrDices);
@@ -320,7 +319,7 @@ class DiceController implements AppInjectableInterface
      *
      * @return bool true if computer shall throw one more
      */
-    private function AIplayCheck(int $nrThrown) : bool
+    public function AIplayCheck(int $nrThrown) : bool
     {
         // Get from session.
         $game = $this->app->session->get("game");

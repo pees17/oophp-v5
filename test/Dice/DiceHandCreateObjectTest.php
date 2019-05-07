@@ -33,8 +33,8 @@ class DiceHandCreateObjectTest extends TestCase
                 $min = $current;
             }
         }
-        $this->assertLessThanOrEqual(30, $max);
-        $this->assertGreaterThanOrEqual(5, $min);
+        $this->assertLessThanOrEqual(12, $max);
+        $this->assertGreaterThanOrEqual(2, $min);
     }
 
     /**

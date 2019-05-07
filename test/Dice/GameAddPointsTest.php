@@ -16,7 +16,7 @@ class GameAddPointsTest extends TestCase
      */
     public function testAddPoints()
     {
-        $game = new Game(["Computer", "Me"], 2);
+        $game = new Game(["Computer", "Me"], 100, 2);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         // Roll the dices

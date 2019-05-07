@@ -15,7 +15,7 @@ class GameRollTest extends TestCase
      */
     public function testRollOneDice()
     {
-        $game = new Game(["Computer", "Me"], 1);
+        $game = new Game(["Computer", "Me"], 100, 1);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         // Check that every roll is between 1 and 6
@@ -42,7 +42,7 @@ class GameRollTest extends TestCase
      */
     public function testRollFiveDices()
     {
-        $game = new Game(["Computer", "Me"], 5);
+        $game = new Game(["Computer", "Me"], 100, 5);
         $this->assertInstanceOf("\Peo\Dice\Game", $game);
 
         // Check that every roll is between 1 and 6

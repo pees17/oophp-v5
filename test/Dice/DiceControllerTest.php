@@ -63,13 +63,8 @@ class DiceControllerTest extends TestCase
      */
     public function testInitActionPost()
     {
-        for ($nrDices = 1; $nrDices <= 3; $nrDices++) {
-            $this->app->request->setGlobals([
-                "post" => ["nrDices" => $nrDices]
-            ]);
-            $res = $this->controller->initActionPost();
-            $this->assertInstanceOf(ResponseUtility::class, $res);
-        }
+        $res = $this->controller->initActionPost();
+        $this->assertInstanceOf(ResponseUtility::class, $res);
     }
 
 
@@ -107,7 +102,7 @@ class DiceControllerTest extends TestCase
         $this->assertInstanceOf(ResponseUtility::class, $res);
 
         // Test throw with and without a '1'
-        $game = new Game(["Nisse Nyman", "Computer"], 2);
+        $game = new Game(["Nisse Nyman", "Computer"], 100, 2);
         $this->app->session->set("game", $game);
 
         $throwOther= false;
@@ -141,7 +136,7 @@ class DiceControllerTest extends TestCase
         $this->assertInstanceOf(ResponseUtility::class, $res);
 
         // Test throw with and without a '1'
-        $game = new Game(["Nisse Nyman", "Computer"], 2);
+        $game = new Game(["Nisse Nyman", "Computer"], 100, 2);
         $this->app->session->set("game", $game);
 
         $throwOther= false;
@@ -175,7 +170,7 @@ class DiceControllerTest extends TestCase
         $this->assertInstanceOf(ResponseUtility::class, $res);
 
         // Test normal case
-        $game = new Game(["Nisse Nyman", "Computer"], 2);
+        $game = new Game(["Nisse Nyman", "Computer"], 100, 2);
         $this->app->session->set("game", $game);
 
         $res = $this->controller->playStopActionGet();
@@ -188,13 +183,18 @@ class DiceControllerTest extends TestCase
      */
     public function testPlayComputerActionGet()
     {
-        // Test throw with and without a '1'
-        $game = new Game(["Nisse Nyman", "Computer"], 2);
-        $this->app->session->set("game", $game);
+        $name = "Nisse Nyman";
+        $nrDices = 1;
+        $game = new Game([$name, "Computer"], 100, $nrDices);
 
-        $throwOther= false;
-        $throwOne= false;
-        while (true) {
+        $this->app->session->set("name", $name);
+        $this->app->session->set("game", $game);
+        $this->app->session->set("nrDices", $nrDices);
+
+        // Test throw with and without a '1'
+        $throwOther = false;
+        $throwOne = false;
+        while (!($throwOther && $throwOne)) {
             $res = $this->controller->playComputerActionGet();
             $this->assertInstanceOf(ResponseUtility::class, $res);
 
@@ -204,10 +204,98 @@ class DiceControllerTest extends TestCase
             if ($this->app->session->get("state") == "Lost") {
                 $throwOne = true;
             };
-
-            if ($throwOther && $throwOne) {
-                break;
-            }
         }
+    }
+
+
+    /**
+     * Tests the function AIplayCheck
+     */
+    public function testAIplayCheck()
+    {
+        $name = "Nisse Nyman";
+        $this->app->session->set("name", $name);
+
+        // Tests when computer in lead
+        $nrDices = 1;
+        $game = new Game([$name, "Computer"], 100, $nrDices);
+        $this->app->session->set("game", $game);
+        $this->app->session->set("nrDices", $nrDices);
+        $game->setPlayers([
+            $name => 0,
+            "Computer" => 90
+        ]);
+
+        $this->assertTrue($this->controller->AIplayCheck(1));
+        $this->assertTrue($this->controller->AIplayCheck(2));
+        $this->assertFalse($this->controller->AIplayCheck(3));
+
+        $nrDices = 2;
+        $game = new Game([$name, "Computer"], 100, $nrDices);
+        $this->app->session->set("game", $game);
+        $this->app->session->set("nrDices", $nrDices);
+        $game->setPlayers([
+            $name => 0,
+            "Computer" => 90
+        ]);
+
+        $this->assertTrue($this->controller->AIplayCheck(0));
+        $this->assertFalse($this->controller->AIplayCheck(1));
+
+        $game->setPlayers([
+            $name => 0,
+            "Computer" => 100
+        ]);
+        $this->assertFalse($this->controller->AIplayCheck(0));
+        $this->assertFalse($this->controller->AIplayCheck(1));
+
+        // Tests when player in lead
+        $nrDices = 1;
+        $game = new Game([$name, "Computer"], 100, $nrDices);
+        $this->app->session->set("game", $game);
+        $this->app->session->set("nrDices", $nrDices);
+        $game->setPlayers([
+            $name => 90,
+            "Computer" => 0
+        ]);
+
+        $this->assertTrue($this->controller->AIplayCheck(0));
+        $this->assertTrue($this->controller->AIplayCheck(1));
+        $this->assertTrue($this->controller->AIplayCheck(2));
+        $this->assertTrue($this->controller->AIplayCheck(3));
+        $this->assertFalse($this->controller->AIplayCheck(4));
+
+        for ($nrDices = 2; $nrDices <= 3; $nrDices++) {
+            $game = new Game([$name, "Computer"], 100, $nrDices);
+            $this->app->session->set("game", $game);
+            $this->app->session->set("nrDices", $nrDices);
+            $game->setPlayers([
+                $name => 90,
+                "Computer" => 0
+            ]);
+
+            $this->assertTrue($this->controller->AIplayCheck(0));
+            $this->assertTrue($this->controller->AIplayCheck(1));
+            $this->assertFalse($this->controller->AIplayCheck(2));
+        }
+
+        $nrDices = 4;
+        $game = new Game([$name, "Computer"], 100, $nrDices);
+        $this->app->session->set("game", $game);
+        $this->app->session->set("nrDices", $nrDices);
+        $game->setPlayers([
+            $name => 90,
+            "Computer" => 0
+        ]);
+
+        $this->assertTrue($this->controller->AIplayCheck(0));
+        $this->assertFalse($this->controller->AIplayCheck(1));
+
+        $game->setPlayers([
+            $name => 100,
+            "Computer" => 0
+        ]);
+        $this->assertTrue($this->controller->AIplayCheck(0));
+        $this->assertTrue($this->controller->AIplayCheck(1));
     }
 }
