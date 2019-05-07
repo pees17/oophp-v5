@@ -77,13 +77,8 @@ url("dice100/playComputer");
 <?php endif; ?>
 
 </div>
-<div class="game_col3">
-
-<!-- <?php if ($histogram) : ?> -->
-    <p class="dice game">Histogram in current game:</p>
-    <p class="dice game">"<?= $histogram ?>"</p>
-<!-- <?php endif; ?> -->
-
 </div>
-
+<div class="game_col2">
+    <p class="dice game">Histogram in current game:</p>
+    <p class="dice game"><?= $histogram ?></p>
 </div>

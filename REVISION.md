@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v4.0.4 (2019-05-07
+------------------------
+* Histogram ready in dice game.
+
 v4.0.3 (2019-05-06)
 ------------------------
 * Unit testing for all methods in the dice controller.
