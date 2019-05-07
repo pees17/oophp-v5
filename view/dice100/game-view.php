@@ -67,7 +67,7 @@ url("dice100/playComputer");
     <?php endforeach; ?>
 
 <p class="dice game">
-    <?= $state === "Lost" ? "$current got a '1', the points are lost!" : "Current sum: $sumCurrent" ?>
+    <?= $state === "Lost" ? "$current got a '1', the points are lost!" : "Current hand: $sumCurrent" ?>
 </p>
 
 <?php endif; ?>

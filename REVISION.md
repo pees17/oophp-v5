@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v4.0.5 (2019-05-07
+------------------------
+* Added AI for the computer in the dice game.
+
 v4.0.4 (2019-05-07
 ------------------------
 * Histogram ready in dice game.

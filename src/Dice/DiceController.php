@@ -19,25 +19,11 @@ use Anax\Commons\AppInjectableTrait;
 class DiceController implements AppInjectableInterface
 {
     use AppInjectableTrait;
-    /**
-     * @var string $db a sample member variable that gets initialised
-     */
-    // private $db = "not active";
 
     /**
-     * The initialize method is optional and will always be called before the
-     * target method/action. This is a convienient method where you could
-     * setup internal properties that are commonly used by several methods.
-     *
-     * @return void
+     * @var int WIN_LEVEL The nunber of points to win the game
      */
-    // public function initialize() : void
-    // {
-    //     // Use to initialise member variables.
-    //     $this->db = "active";
-    //     // Use $this->app to access the framework services.
-    // }
-
+    const WIN_LEVEL = 100;
 
     /**
      * This is the index method action, it handles:
@@ -88,19 +74,10 @@ class DiceController implements AppInjectableInterface
         $name = $this->app->request->getPost("name");
         $nrDices = $this->app->request->getPost("nrDices");
 
-        // Simple AI
-        if ($nrDices == 1) {
-            $computerThrows = 3;
-        } elseif ($nrDices == 2) {
-            $computerThrows = 2;
-        } else {
-            $computerThrows = 1;
-        }
 
         // Update session
         $this->app->session->set("name", $name);
         $this->app->session->set("nrDices", $nrDices);
-        $this->app->session->set("computerThrows", $computerThrows);
 
         return $this->app->response->redirect("dice100/startGame");
     }
@@ -120,7 +97,7 @@ class DiceController implements AppInjectableInterface
         $nrDices = $this->app->session->get("nrDices");
 
         // Create the game
-        $game = new Game([$name, "Computer"], $nrDices);
+        $game = new Game([$name, "Computer"], self::WIN_LEVEL, $nrDices);
 
         // Update session
         $this->app->session->set("game", $game);
@@ -158,8 +135,6 @@ class DiceController implements AppInjectableInterface
         $histogram = new Histogram();
         $diceHand = $game->getDiceHand();
         $histogram->injectData($diceHand);
-
-
 
         // Render view
         $data = [
@@ -302,12 +277,12 @@ class DiceController implements AppInjectableInterface
     {
         // Get from session.
         $game = $this->app->session->get("game");
-        $computerThrows = $this->app->session->get("computerThrows");
 
         $dices = [];
         $state = "Ready";
 
-        while ($computerThrows > 0) {
+        $nrThrown = 0;
+        while ($this->AIplayCheck($nrThrown)) {
             // Throw a dice hand, and get the graphic representation
             $game->roll();
             $dices[] = $game->getGraphicHand();
@@ -318,7 +293,7 @@ class DiceController implements AppInjectableInterface
 
                 break;  // Break out of while loop
             }
-            $computerThrows -= 1;
+            $nrThrown += 1;
         }
         // Update the points with the result
         $game->addPoints("Computer");
@@ -334,5 +309,63 @@ class DiceController implements AppInjectableInterface
         $this->app->session->set("winner", $winner);
 
         return $this->app->response->redirect("dice100/gameView");
+    }
+
+    /**
+     * This function implements tha AI that decides if the computer shall
+     * throw one more hand. It is based on the points of both players and the
+     * number of dices used.
+     *
+     * @param int $nrThrown The number of throws already done
+     *
+     * @return bool true if computer shall throw one more
+     */
+    private function AIplayCheck(int $nrThrown) : bool
+    {
+        // Get from session.
+        $game = $this->app->session->get("game");
+        $nrDices = $this->app->session->get("nrDices");
+        $name = $this->app->session->get("name");
+
+        // Points for computer and player
+        $players = $game->getPlayers();
+        $computerPoints = $players["Computer"] + $game->getSumCurrent();
+        $playerPoints = $players[$name];
+
+        if ($computerPoints > $playerPoints) {
+            // Computer is leading
+            if ($computerPoints >= self::WIN_LEVEL) {
+                return false;   // Computer has won already
+            }
+            if ($nrDices == 1) {
+                if ($nrThrown >= 3) {
+                    return false;
+                }
+            } else {
+                if ($nrThrown >= 1) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            // Player is leading
+            if ($playerPoints >= self::WIN_LEVEL) {
+                return true;   // Player has 100 already, Throw again.
+            }
+            if ($nrDices == 1) {
+                if ($nrThrown >= 4) {
+                    return false;
+                }
+            } else if ($nrDices == 2 || $nrDices == 3) {
+                if ($nrThrown >= 2) {
+                    return false;
+                }
+            } else {
+                if ($nrThrown >= 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

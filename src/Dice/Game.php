@@ -12,7 +12,7 @@ class Game
      * @var int $nrDices     The number of dices to use in a roll
      * @var int $sumCurrent  The sum of the rolls in current round for current player
      * @var int $lastHand    Array with the values from the last roll
-     * @var int WIN          The nunber of points to win the game
+     * @var int $winLevel    The nunber of points to win the game
      */
 
     private $diceHand;
@@ -20,19 +20,21 @@ class Game
     private $nrDices;
     private $sumCurrent = 0;
     private $lastHand = [];
-
-    const WIN = 100;
+    private $winLevel;
 
     /**
      * Constructor to create a Game with a number of players
      *
      * @param string $players  Array with the names of the players.
+     * @param int $winLevel    The nunber of points to win the game
+     * @param int $nrDices     The number of dices to use in a roll
      */
-    public function __construct(array $players, int $nrDices = 1)
+    public function __construct(array $players, int $winLevel = 100, int $nrDices = 1)
     {
         foreach ($players as $player) {
             $this->players[$player] = null;    // Add players with no points
         }
+        $this->winLevel = $winLevel;
         $this->nrDices = $nrDices;
         $this->diceHand = new DiceHandHistogram($nrDices);
     }
@@ -157,7 +159,7 @@ class Game
     public function checkWinner()
     {
         if ($winner = $this->getHighest()) {
-            if ($this->players[$winner] >= self::WIN) {
+            if ($this->players[$winner] >= $this->winLevel) {
                 return $winner;
             }
         }
