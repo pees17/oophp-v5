@@ -12,7 +12,7 @@ url("dice100/playComputer");
 
 // Show incoming variables and view helper functions
 // echo showEnvironment(get_defined_vars(), get_defined_functions());
-?><h1>Dice 100 game, new</h1>
+?><h1>Dice 100 game, controller version</h1>
 
 <p>All players plays a round and after each round an evaluation is done to see if we have a winner.
 </p>
@@ -77,4 +77,13 @@ url("dice100/playComputer");
 <?php endif; ?>
 
 </div>
+<div class="game_col3">
+
+<!-- <?php if ($histogram) : ?> -->
+    <p class="dice game">Histogram in current game:</p>
+    <p class="dice game">"<?= $histogram ?>"</p>
+<!-- <?php endif; ?> -->
+
+</div>
+
 </div>

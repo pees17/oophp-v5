@@ -154,6 +154,13 @@ class DiceController implements AppInjectableInterface
         $round = $this->app->session->get("round");
         $current = $this->app->session->get("current");
 
+        // Generate histogram
+        $histogram = new Histogram();
+        $diceHand = $game->getDiceHand();
+        $histogram->injectData($diceHand);
+
+
+
         // Render view
         $data = [
             "dices" => $dices,
@@ -162,7 +169,8 @@ class DiceController implements AppInjectableInterface
             "sumCurrent" => $game->getSumCurrent(),
             "winner" => $winner,
             "state" => $state,
-            "round" => $round
+            "round" => $round,
+            "histogram" => $histogram->getAsText()
         ];
 
         $this->app->page->add("dice100/game-view", $data);

@@ -8,7 +8,7 @@ namespace Anax\View;
 // Show incoming variables and view helper functions
 // echo showEnvironment(get_defined_vars(), get_defined_functions());
 
-?><h1>Dice 100 game, new</h1>
+?><h1>Dice 100 game, controller version</h1>
 
 <p>In this game you will play against the computer. Enter your name and the number of dices to use.</p>
 

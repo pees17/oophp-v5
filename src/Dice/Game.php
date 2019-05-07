@@ -7,12 +7,15 @@ namespace Peo\Dice;
 class Game
 {
     /**
-    * @var object $players  Array with the names and points of the players
-    * @var int $nrDices     The number of dices to use in a roll
-    * @var int $sumCurrent  The sum of the rolls in current round for current player
-    * @var int $lastHand    Array with the values from the last roll
-    * @var int WIN          The nunber of points to win the game
+     * @var DiceHandHistogram $diceHand A hand of dices
+     * @var object $players  Array with the names and points of the players
+     * @var int $nrDices     The number of dices to use in a roll
+     * @var int $sumCurrent  The sum of the rolls in current round for current player
+     * @var int $lastHand    Array with the values from the last roll
+     * @var int WIN          The nunber of points to win the game
      */
+
+    private $diceHand;
     private $players;
     private $nrDices;
     private $sumCurrent = 0;
@@ -31,6 +34,18 @@ class Game
             $this->players[$player] = null;    // Add players with no points
         }
         $this->nrDices = $nrDices;
+        $this->diceHand = new DiceHandHistogram($nrDices);
+    }
+
+
+    /**
+     * Get the dice hand
+     *
+     * @return DiceHandHistogram The dice hand
+     */
+    public function getDiceHand() : DiceHandHistogram
+    {
+        return $this->diceHand;
     }
 
     /**
@@ -51,10 +66,9 @@ class Game
      */
     public function roll() : void
     {
-        $diceHand = new DiceHand($this->nrDices);
-        $diceHand->roll();
-        $this->sumCurrent += $diceHand->getSum();
-        $this->lastHand = $diceHand->getValues();
+        $this->diceHand->roll();
+        $this->sumCurrent += $this->diceHand->getSum();
+        $this->lastHand = $this->diceHand->getLastRoll();
     }
 
 

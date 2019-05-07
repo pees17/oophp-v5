@@ -7,36 +7,42 @@ namespace Peo\Dice;
 class DiceHand
 {
     /**
-     * @var Dice $dices   Array consisting of dices.
-     * @var int  $values  Array consisting of last roll of the dices.
+     * @var Dice $dices    Array consisting of dices.
+     * @var int  $lastRoll Array consisting of last roll of the dices.
+     * @var int  $sides    Number of sides on the dices.
      */
     private $dices;
-    private $values;
+    private $lastRoll;
+    protected $sides;
 
     /**
     * Constructor to initiate the dicehand with a number of dices.
     *
-    * @param int $dices Number of dices to create, defaults to five.
+    * @param int $nrDices Number of dices to create, defaults to two.
+    * @param int $sides   Number of sides on the dices, defaults to 6.
     */
-    public function __construct(int $nrDices = 5)
+    public function __construct(int $nrDices = 2, int $sides = 6)
     {
         $this->dices  = [];
-        $this->values = [];
+        $this->lastRoll = [];
+        $this->sides = $sides;
         for ($i = 0; $i < $nrDices; $i++) {
-            $this->dices[] = new Dice();
+            $this->dices[] = new Dice($sides);
         }
     }
 
     /**
      * Roll all dices and save their values
      *
-     * @return void
+     * @return array with the values of the rolled dices
      */
-    public function roll() : void
+    public function roll() : array
     {
+        $this->lastRoll = [];
         foreach ($this->dices as $dice) {
-            $this->values[] = $dice->roll();
+            $this->lastRoll[] = $dice->roll();
         }
+        return $this->getLastRoll();
     }
 
     /**
@@ -44,9 +50,9 @@ class DiceHand
      *
      * @return array with values of the last roll.
      */
-    public function getValues() : array
+    public function getLastRoll() : array
     {
-        return $this->values;
+        return $this->lastRoll;
     }
 
     /**
@@ -56,6 +62,6 @@ class DiceHand
      */
     public function getSum() : int
     {
-        return array_sum($this->values);
+        return array_sum($this->lastRoll);
     }
 }
