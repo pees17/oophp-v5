@@ -184,26 +184,17 @@ class DiceControllerTest extends TestCase
     public function testPlayComputerActionGet()
     {
         $name = "Nisse Nyman";
-        $nrDices = 1;
+        $nrDices = 2;
         $game = new Game([$name, "Computer"], 100, $nrDices);
 
         $this->app->session->set("name", $name);
         $this->app->session->set("game", $game);
         $this->app->session->set("nrDices", $nrDices);
 
-        // Test throw with and without a '1'
-        $throwOther = false;
-        $throwOne = false;
-        while (!($throwOther && $throwOne)) {
+        // Make 50 throws to be sure to get a '1'
+        for ($i = 0; $i < 50; $i++) {
             $res = $this->controller->playComputerActionGet();
             $this->assertInstanceOf(ResponseUtility::class, $res);
-
-            if ($this->app->session->get("state") == "Ready") {
-                $throwOther = true;
-            };
-            if ($this->app->session->get("state") == "Lost") {
-                $throwOne = true;
-            };
         }
     }
 
