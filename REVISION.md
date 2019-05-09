@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v4.0.7 (2019-05-09)
+------------------------
+* Ready with kmom04, including report.
+
 v4.0.6 (2019-05-07
 ------------------------
 * Unit tests ready for all classes.

@@ -318,6 +318,8 @@ class DiceController implements AppInjectableInterface
      * @param int $nrThrown The number of throws already done
      *
      * @return bool true if computer shall throw one more
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function aiPlayCheck(int $nrThrown) : bool
     {
@@ -340,10 +342,8 @@ class DiceController implements AppInjectableInterface
                 if ($nrThrown >= 3) {
                     return false;
                 }
-            } else {
-                if ($nrThrown >= 1) {
-                    return false;
-                }
+            } elseif ($nrThrown >= 1) {
+                return false;
             }
             return true;
         } else {
@@ -355,14 +355,12 @@ class DiceController implements AppInjectableInterface
                 if ($nrThrown >= 4) {
                     return false;
                 }
-            } else if ($nrDices == 2 || $nrDices == 3) {
+            } elseif ($nrDices == 2 || $nrDices == 3) {
                 if ($nrThrown >= 2) {
                     return false;
                 }
-            } else {
-                if ($nrThrown >= 1) {
-                    return false;
-                }
+            } elseif ($nrThrown >= 1) {
+                return false;
             }
         }
         return true;
