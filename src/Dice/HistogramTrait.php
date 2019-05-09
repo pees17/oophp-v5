@@ -33,7 +33,7 @@ trait HistogramTrait
     {
         return 1;
     }
-    // 
+    //
     //
     // /**
     //  * Get max value for the histogram.

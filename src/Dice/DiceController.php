@@ -281,7 +281,7 @@ class DiceController implements AppInjectableInterface
         $state = "Ready";
 
         $nrThrown = 0;
-        while ($this->AIplayCheck($nrThrown)) {
+        while ($this->aiPlayCheck($nrThrown)) {
             // Throw a dice hand, and get the graphic representation
             $game->roll();
             $dices[] = $game->getGraphicHand();
@@ -319,7 +319,7 @@ class DiceController implements AppInjectableInterface
      *
      * @return bool true if computer shall throw one more
      */
-    public function AIplayCheck(int $nrThrown) : bool
+    public function aiPlayCheck(int $nrThrown) : bool
     {
         // Get from session.
         $game = $this->app->session->get("game");

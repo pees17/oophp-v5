@@ -184,7 +184,7 @@ class DiceControllerTest extends TestCase
     public function testPlayComputerActionGet()
     {
         $name = "Nisse Nyman";
-        $nrDices = 2;
+        $nrDices = 5;
         $game = new Game([$name, "Computer"], 100, $nrDices);
 
         $this->app->session->set("name", $name);
@@ -200,9 +200,9 @@ class DiceControllerTest extends TestCase
 
 
     /**
-     * Tests the function AIplayCheck
+     * Tests the function aiPlayCheck
      */
-    public function testAIplayCheck()
+    public function testaiPlayCheck()
     {
         $name = "Nisse Nyman";
         $this->app->session->set("name", $name);
@@ -217,9 +217,9 @@ class DiceControllerTest extends TestCase
             "Computer" => 90
         ]);
 
-        $this->assertTrue($this->controller->AIplayCheck(1));
-        $this->assertTrue($this->controller->AIplayCheck(2));
-        $this->assertFalse($this->controller->AIplayCheck(3));
+        $this->assertTrue($this->controller->aiPlayCheck(1));
+        $this->assertTrue($this->controller->aiPlayCheck(2));
+        $this->assertFalse($this->controller->aiPlayCheck(3));
 
         $nrDices = 2;
         $game = new Game([$name, "Computer"], 100, $nrDices);
@@ -230,15 +230,15 @@ class DiceControllerTest extends TestCase
             "Computer" => 90
         ]);
 
-        $this->assertTrue($this->controller->AIplayCheck(0));
-        $this->assertFalse($this->controller->AIplayCheck(1));
+        $this->assertTrue($this->controller->aiPlayCheck(0));
+        $this->assertFalse($this->controller->aiPlayCheck(1));
 
         $game->setPlayers([
             $name => 0,
             "Computer" => 100
         ]);
-        $this->assertFalse($this->controller->AIplayCheck(0));
-        $this->assertFalse($this->controller->AIplayCheck(1));
+        $this->assertFalse($this->controller->aiPlayCheck(0));
+        $this->assertFalse($this->controller->aiPlayCheck(1));
 
         // Tests when player in lead
         $nrDices = 1;
@@ -250,11 +250,11 @@ class DiceControllerTest extends TestCase
             "Computer" => 0
         ]);
 
-        $this->assertTrue($this->controller->AIplayCheck(0));
-        $this->assertTrue($this->controller->AIplayCheck(1));
-        $this->assertTrue($this->controller->AIplayCheck(2));
-        $this->assertTrue($this->controller->AIplayCheck(3));
-        $this->assertFalse($this->controller->AIplayCheck(4));
+        $this->assertTrue($this->controller->aiPlayCheck(0));
+        $this->assertTrue($this->controller->aiPlayCheck(1));
+        $this->assertTrue($this->controller->aiPlayCheck(2));
+        $this->assertTrue($this->controller->aiPlayCheck(3));
+        $this->assertFalse($this->controller->aiPlayCheck(4));
 
         for ($nrDices = 2; $nrDices <= 3; $nrDices++) {
             $game = new Game([$name, "Computer"], 100, $nrDices);
@@ -265,9 +265,9 @@ class DiceControllerTest extends TestCase
                 "Computer" => 0
             ]);
 
-            $this->assertTrue($this->controller->AIplayCheck(0));
-            $this->assertTrue($this->controller->AIplayCheck(1));
-            $this->assertFalse($this->controller->AIplayCheck(2));
+            $this->assertTrue($this->controller->aiPlayCheck(0));
+            $this->assertTrue($this->controller->aiPlayCheck(1));
+            $this->assertFalse($this->controller->aiPlayCheck(2));
         }
 
         $nrDices = 4;
@@ -279,14 +279,14 @@ class DiceControllerTest extends TestCase
             "Computer" => 0
         ]);
 
-        $this->assertTrue($this->controller->AIplayCheck(0));
-        $this->assertFalse($this->controller->AIplayCheck(1));
+        $this->assertTrue($this->controller->aiPlayCheck(0));
+        $this->assertFalse($this->controller->aiPlayCheck(1));
 
         $game->setPlayers([
             $name => 100,
             "Computer" => 0
         ]);
-        $this->assertTrue($this->controller->AIplayCheck(0));
-        $this->assertTrue($this->controller->AIplayCheck(1));
+        $this->assertTrue($this->controller->aiPlayCheck(0));
+        $this->assertTrue($this->controller->aiPlayCheck(1));
     }
 }
