@@ -149,3 +149,7 @@ table.game tr .center {
 .game_col3 {
   float: left;
 }
+img.thumb {
+  max-width: 100px;
+  max-height: 100px;
+}
