@@ -10,22 +10,35 @@ if (!$res) {
 }
 
 
-?><table>
-    <tr class="first">
-        <th>Rad</th>
-        <th>Id</th>
-        <th>Bild</th>
-        <th>Titel</th>
-        <th>År</th>
+?><h1>My Movie Database</h1>
+<table class="movie">
+    <tr>
+        <th class="center">Rad</th>
+        <th class="center">Id</th>
+        <th class="center">Bild</th>
+        <th class="left">Titel</th>
+        <th class="center">År</th>
+        <th class="center">Åtgärd</th>
     </tr>
 <?php $id = -1; foreach ($res as $row) :
     $id++; ?>
     <tr>
-        <td><?= $id ?></td>
-        <td><?= $row->id ?></td>
-        <td><img class="thumb" src="<?= $row->image ?>"></td>
-        <td><?= $row->title ?></td>
-        <td><?= $row->year ?></td>
+        <td class="center"><?= $id ?></td>
+        <td class="center"><?= $row->id ?></td>
+        <td class="center"><img class="thumb" src="<?= url($row->image) ?>"></td>
+        <td class="left"><?= $row->title ?></td>
+        <td class="center"><?= $row->year ?></td>
+        <td class="center">
+        <a class="icon" title="Edit movie" href="<?= url("movie/edit") ?>">Edit</a>
+        <a class="icon" title="Delete movie" href="<?= url("movie/delete") ?>">Delete</a>
+    </a>
+</td>
     </tr>
 <?php endforeach; ?>
 </table>
+<div class="game">
+    <a class="button dice" title="Add movie" href="<?= url("movie/add") ?>">Add</a>
+</div>
+<div class="game">
+    <a class="button dice" title="Reset the database" href="<?= url("movie/reset") ?>">Reset database</a>
+</div>
