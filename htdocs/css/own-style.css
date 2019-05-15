@@ -182,3 +182,10 @@ table.movie tr .center {
 table.movie tr:nth-of-type(2) td {
   padding-top: 12px;
 }
+form.movie p {
+  margin-top: 0em;
+  margin-bottom: 1em;
+}
+form.movie p:last-of-type {
+  margin-top: 2em;
+}

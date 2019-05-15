@@ -48,7 +48,7 @@ class MovieController implements AppInjectableInterface
      */
     public function indexAction() : object
     {
-        $title = "Movie database | oophp";
+        $title = "Movie database";
 
         // Get data from database
         $this->app->db->connect();
@@ -95,6 +95,34 @@ class MovieController implements AppInjectableInterface
         ]);
     }
 
+    /**
+     * This is the edit method action, it handles:
+     * GET mountpoint/edit
+     * It will render the view to edit a movie item
+     *
+     * @param string $id the id of the movie to edit
+     *
+     * @return object rendering the edit movie view
+     */
+    public function editActionGet($id) : object
+    {
+        $title = "Edit movie";
+
+        // Get data from database
+        $this->app->db->connect();
+        $sql = "SELECT * FROM movie WHERE id = ?;";
+        $res = $this->app->db->executeFetchAll($sql, [$id]);
+
+        $data = [
+            "res" => $res,
+        ];
+        $this->app->page->add("movie/edit", $data);
+
+        // Render view
+        return $this->app->page->render([
+            "title" => $title,
+        ]);
+    }
 
     /**
      * This is the init method action, it handles:

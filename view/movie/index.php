@@ -29,8 +29,8 @@ if (!$res) {
         <td class="left"><?= $row->title ?></td>
         <td class="center"><?= $row->year ?></td>
         <td class="center">
-        <a class="icon" title="Edit movie" href="<?= url("movie/edit") ?>">Edit</a>
-        <a class="icon" title="Delete movie" href="<?= url("movie/delete") ?>">Delete</a>
+        <a class="icon" title="Edit movie" href="<?= url("movie/edit/$row->id") ?>">Edit</a>
+        <a class="icon" title="Delete movie" href="<?= url("movie/delete/$row->id") ?>">Delete</a>
     </a>
 </td>
     </tr>
