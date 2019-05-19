@@ -9,7 +9,6 @@ if (!$res) {
     return;
 }
 
-
 ?><h1>My Movie Database</h1>
 <table class="movie">
     <tr>
@@ -36,8 +35,9 @@ if (!$res) {
     </tr>
 <?php endforeach; ?>
 </table>
+
 <div class="game">
-    <a class="button dice" title="Add movie" href="<?= url("movie/add") ?>">Add</a>
+    <a class="button dice" title="Add movie" href="<?= url("movie/add") ?>">Add movie</a>
 </div>
 <div class="game">
     <a class="button dice" title="Reset the database" href="<?= url("movie/reset") ?>">Reset database</a>

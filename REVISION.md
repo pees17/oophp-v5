@@ -1,6 +1,22 @@
 Revision history
 ==================
 
+v5.0.4 (2019-05-19)
+------------------------
+* Working controller with complete CRUD
+
+v5.0.3 (2019-05-15)
+------------------------
+* Working controller with view, reset and edit routes
+
+v5.0.2 (2019-05-15)
+------------------------
+* Working controller with only view route
+
+v5.0.1 (2019-05-14)
+------------------------
+* Movie route integrated into "redovisa"
+
 v4.0.7 (2019-05-09)
 ------------------------
 * Ready with kmom04, including report.

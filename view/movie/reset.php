@@ -7,8 +7,9 @@ namespace Anax\View;
 
 // Restore the database to its original settings
 $file   = "../sql/movie/setup.sql";
+$mysql  = $config["mysql"];
 // $mysql  = "/usr/bin/mysql";
-$mysql  = '"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql"';
+// $mysql  = '"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql"';
 $output = null;
 
 // Extract hostname and databasename from dsn
@@ -30,11 +31,14 @@ if (isset($_POST["reset"]) || isset($_GET["reset"])) {
         . "</pre>";
 }
 ?><h1>My Movie Database</h1>
-<p>Reset the database to its initial state.</p>
 <form method="post">
-    <input type="submit" name="reset" value="Reset database">
+    <fieldset>
+    <legend>Reset the database to initial state</legend>
+    <input type="submit" name="reset" value="Reset">
     <?= $output ?>
+    </fieldset>
 </form>
+
 <div class="game">
-    <a class="button dice" title="View all movies" href="<?= url("movie/index") ?>">View all</a>
+    <a class="button dice" title="View all movies" href="<?= url("movie/index") ?>">Back</a>
 </div>

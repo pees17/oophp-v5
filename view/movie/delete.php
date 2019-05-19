@@ -2,7 +2,7 @@
 namespace Anax\View;
 
 /**
- * Render the view to edit a movie
+ * Render the view to delete a movie
  */
 
 if (!$res) {
@@ -13,28 +13,27 @@ $movie = $res[0];
 ?><h1>My Movie Database</h1>
 <form class="movie" method="post">
     <fieldset>
-    <legend>Edit movie</legend>
+    <legend>Delete movie</legend>
 
     <p>
         <label>Title:<br>
-        <input type="text" name="movieTitle" value="<?= $movie->title ?>">
+        <input type="text" name="movieTitle" value="<?= $movie->title ?>" readonly>
         </label>
     </p>
 
     <p>
         <label>Year:<br>
-        <input type="number" name="movieYear" value="<?= $movie->year ?>">
+        <input type="number" name="movieYear" value="<?= $movie->year ?>" readonly>
     </p>
 
     <p>
         <label>Image:<br>
-        <input type="text" name="movieImage" value="<?= $movie->image ?>">
+        <input type="text" name="movieImage" value="<?= $movie->image ?>" readonly>
         </label>
     </p>
 
     <p>
-        <input type="submit" name="doSave" value="Save">
-        <input type="reset" value="Reset">
+        <input type="submit" name="doDelete" value="Delete">
     </p>
     </fieldset>
 </form>
