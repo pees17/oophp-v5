@@ -44,6 +44,7 @@ class MovieController implements AppInjectableInterface
         ];
         $this->app->page->add("movie/header");
         $this->app->page->add("movie/index", $data);
+        $this->app->page->add("movie/footer");
 
         // Render view
         return $this->app->page->render([
@@ -98,6 +99,7 @@ class MovieController implements AppInjectableInterface
         ];
         $this->app->page->add("movie/header");
         $this->app->page->add("movie/edit", $data);
+        $this->app->page->add("movie/footer");
 
         // Render view
         return $this->app->page->render([
@@ -155,6 +157,7 @@ class MovieController implements AppInjectableInterface
         ];
         $this->app->page->add("movie/header");
         $this->app->page->add("movie/delete", $data);
+        $this->app->page->add("movie/footer");
 
         // Render view
         return $this->app->page->render([
@@ -187,7 +190,7 @@ class MovieController implements AppInjectableInterface
     /**
      * This is the searchtitle method action, it handles:
      * GET mountpoint/searchtitle
-     * It will render the view to search for a movie based on its title
+     * It will render the view to search for movies based on their title
      * and view the movies that match
      *
      * @return object rendering the searchtitle view and result
@@ -212,6 +215,55 @@ class MovieController implements AppInjectableInterface
         $this->app->page->add("movie/header");
         $this->app->page->add("movie/searchtitle", $data);
         $this->app->page->add("movie/index", $data);
+        $this->app->page->add("movie/footer");
+
+        // Render view
+        return $this->app->page->render([
+            "title" => $title,
+        ]);
+    }
+
+
+    /**
+     * This is the searchyear method action, it handles:
+     * GET mountpoint/searchyear
+     * It will render the view to search for movies based on their year
+     * and view the movies that match
+     *
+     * @return object rendering the searchyear view and result
+     */
+    public function searchYearActionGet() : object
+    {
+        $title = "Search on year";
+
+        // Get GET data
+        $year1 = $this->app->request->getGet("year1");
+        $year2 = $this->app->request->getGet("year2");
+
+        // Get data from database
+        $this->app->db->connect();
+        $res = null;
+        if ($year1 && $year2) {
+            $sql = "SELECT * FROM movie WHERE year >= ? AND year <= ?;";
+            $res = $this->app->db->executeFetchAll($sql, [$year1, $year2]);
+        } elseif ($year1) {
+            $sql = "SELECT * FROM movie WHERE year >= ?;";
+            $res = $this->app->db->executeFetchAll($sql, [$year1]);
+        } elseif ($year2) {
+            $sql = "SELECT * FROM movie WHERE year <= ?;";
+            $res = $this->app->db->executeFetchAll($sql, [$year2]);
+        }
+
+        // Add view
+        $data = [
+            "res" => $res,
+            "year1" => $year1,
+            "year2" => $year2,
+        ];
+        $this->app->page->add("movie/header");
+        $this->app->page->add("movie/searchyear", $data);
+        $this->app->page->add("movie/index", $data);
+        $this->app->page->add("movie/footer");
 
         // Render view
         return $this->app->page->render([
@@ -241,6 +293,7 @@ class MovieController implements AppInjectableInterface
         ];
         $this->app->page->add("movie/header");
         $this->app->page->add("movie/reset", $data);
+        $this->app->page->add("movie/footer");
 
         // Render view
         return $this->app->page->render([

@@ -74,6 +74,13 @@ form.game.dices input[type="text"] {
 .game a.button.dice {
   margin-top: 1em;
 }
+.game a.button.red {
+  background: #bd0000;
+  margin-top: 0;
+}
+.game a.button.red:hover {
+  background: #900000;
+}
 p.game {
   margin-top: 12px;
 }

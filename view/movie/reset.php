@@ -37,7 +37,3 @@ if (isset($_POST["reset"]) || isset($_GET["reset"])) {
     <?= $output ?>
     </fieldset>
 </form>
-
-<div class="game">
-    <a class="button dice" title="View all movies" href="<?= url("movie/index") ?>">Back</a>
-</div>

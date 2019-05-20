@@ -19,24 +19,17 @@ $movie = $res[0];
         <input type="text" name="movieTitle" value="<?= $movie->title ?>" readonly>
         </label>
     </p>
-
     <p>
         <label>Year:<br>
         <input type="number" name="movieYear" value="<?= $movie->year ?>" readonly>
     </p>
-
     <p>
         <label>Image:<br>
         <input type="text" name="movieImage" value="<?= $movie->image ?>" readonly>
         </label>
     </p>
-
     <p>
         <input type="submit" name="doDelete" value="Delete">
     </p>
     </fieldset>
 </form>
-
-<div class="game">
-    <a class="button dice" title="View all movies" href="<?= url("movie/index") ?>">Back</a>
-</div>

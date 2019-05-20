@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v5.0.5 (2019-05-20)
+------------------------
+* Added search on title and year in controller
+
 v5.0.4 (2019-05-19)
 ------------------------
 * Working controller with complete CRUD

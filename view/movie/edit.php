@@ -37,7 +37,3 @@ $movie = $res[0];
     </p>
     </fieldset>
 </form>
-
-<div class="game">
-    <a class="button dice" title="View all movies" href="<?= url("movie/index") ?>">Back</a>
-</div>
