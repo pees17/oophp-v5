@@ -11,5 +11,6 @@ namespace Anax\View;
     <a class="button dice" title="Search on title" href="<?= url("movie/searchtitle") ?>">Search title</a>
     <a class="button dice" title="Search on year" href="<?= url("movie/searchyear") ?>">Search year</a></div>
 <div class="game">
-    <a class="button dice red" title="Reset the database" href="<?= url("movie/reset") ?>">Reset database</a>
+    <a class="button dice red" title="Reset the database to its initial state"
+    href="<?= url("movie/reset") ?>">Reset database</a>
 </div>

@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v5.0.6 (2019-05-20)
+------------------------
+* Ready with kmom05, including report.
+
 v5.0.5 (2019-05-20)
 ------------------------
 * Added search on title and year in controller
