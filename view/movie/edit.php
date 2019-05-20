@@ -10,8 +10,7 @@ if (!$res) {
 }
 $movie = $res[0];
 
-?><h1>My Movie Database</h1>
-<form class="movie" method="post">
+?><form class="movie" method="post">
     <fieldset>
     <legend>Edit movie</legend>
 

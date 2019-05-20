@@ -30,8 +30,7 @@ if (isset($_POST["reset"]) || isset($_GET["reset"])) {
         . print_r($output, 1)
         . "</pre>";
 }
-?><h1>My Movie Database</h1>
-<form method="post">
+?><form method="post">
     <fieldset>
     <legend>Reset the database to initial state</legend>
     <input type="submit" name="reset" value="Reset">

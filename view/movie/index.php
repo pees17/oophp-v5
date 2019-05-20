@@ -6,11 +6,15 @@ namespace Anax\View;
  */
 
 if (!$res) {
+    ?>
+    <div class="game">
+        <a class="button dice" title="View all movies" href="<?= url("movie/index") ?>">View all movies</a>
+    </div>
+    <?php
     return;
 }
 
-?><h1>My Movie Database</h1>
-<table class="movie">
+?><table class="movie">
     <tr>
         <th class="center">Rad</th>
         <th class="center">Id</th>
@@ -38,6 +42,7 @@ if (!$res) {
 
 <div class="game">
     <a class="button dice" title="Add movie" href="<?= url("movie/add") ?>">Add movie</a>
+    <a class="button dice" title="Search on title" href="<?= url("movie/searchtitle") ?>">Search title</a>
 </div>
 <div class="game">
     <a class="button dice" title="Reset the database" href="<?= url("movie/reset") ?>">Reset database</a>

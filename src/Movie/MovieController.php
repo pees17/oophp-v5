@@ -42,6 +42,7 @@ class MovieController implements AppInjectableInterface
         $data = [
             "res" => $res,
         ];
+        $this->app->page->add("movie/header");
         $this->app->page->add("movie/index", $data);
 
         // Render view
@@ -95,6 +96,7 @@ class MovieController implements AppInjectableInterface
         $data = [
             "res" => $res,
         ];
+        $this->app->page->add("movie/header");
         $this->app->page->add("movie/edit", $data);
 
         // Render view
@@ -151,6 +153,7 @@ class MovieController implements AppInjectableInterface
         $data = [
             "res" => $res,
         ];
+        $this->app->page->add("movie/header");
         $this->app->page->add("movie/delete", $data);
 
         // Render view
@@ -182,6 +185,42 @@ class MovieController implements AppInjectableInterface
 
 
     /**
+     * This is the searchtitle method action, it handles:
+     * GET mountpoint/searchtitle
+     * It will render the view to search for a movie based on its title
+     * and view the movies that match
+     *
+     * @return object rendering the searchtitle view and result
+     */
+    public function searchTitleActionGet() : object
+    {
+        $title = "Search on title";
+
+        // Get GET data
+        $searchTitle = $this->app->request->getGet("searchTitle");
+
+        // Get data from database
+        $this->app->db->connect();
+        $sql = "SELECT * FROM movie WHERE title LIKE ?;";
+        $res = $this->app->db->executeFetchAll($sql, [$searchTitle]);
+
+        // Add view
+        $data = [
+            "res" => $res,
+            "searchTitle" => $searchTitle,
+        ];
+        $this->app->page->add("movie/header");
+        $this->app->page->add("movie/searchtitle", $data);
+        $this->app->page->add("movie/index", $data);
+
+        // Render view
+        return $this->app->page->render([
+            "title" => $title,
+        ]);
+    }
+
+
+    /**
      * This is the reset method action, it handles:
      * ANY METHOD mountpoint/reset
      * It will render the reset view to reset the database to its
@@ -200,6 +239,7 @@ class MovieController implements AppInjectableInterface
         $data = [
             "config" => $dbConfig["config"],
         ];
+        $this->app->page->add("movie/header");
         $this->app->page->add("movie/reset", $data);
 
         // Render view
