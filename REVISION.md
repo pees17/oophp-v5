@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v6.0.1 (2019-05-22)
+------------------------
+* First filter in TextFilter working.
+
 v5.0.6 (2019-05-20)
 ------------------------
 * Ready with kmom05, including report.
