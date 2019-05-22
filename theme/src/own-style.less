@@ -18,6 +18,13 @@
     #desinax-mixin.clearfix();
 }
 
+/**
+ * Font Awesome.
+ */
+@import "@fortawesome/fontawesome-free/less/fontawesome.less";
+@import "@fortawesome/fontawesome-free/less/solid.less";
+@import "@fortawesome/fontawesome-free/less/brands.less";
+
 article.article {
     .clearfix();
 }
@@ -28,6 +35,11 @@ article.article {
 
 .inner-wrap-main {
     min-height: 36em;
+}
+
+.inner-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 form.game {
@@ -237,6 +249,50 @@ form.movie p {
 
     &:last-of-type {
         margin-top: 2em;
+    }
+}
+
+/**
+ * Style for the content database
+ */
+
+table.content {
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    border-collapse: collapse;
+    margin: 2em 0 1em;
+
+    tr:hover {
+        background-color: #eee;
+    }
+
+    th {
+        border-bottom: 2px solid #ccc;
+    }
+
+    td,
+    th {
+        padding: 4px;
+    }
+
+    tr .right {
+        text-align: right;
+    }
+
+    tr .left {
+        text-align: left;
+    }
+
+    tr .center {
+        text-align: center;
+    }
+
+    tr:nth-of-type(2) td {
+        padding-top: 12px;
     }
 }
 

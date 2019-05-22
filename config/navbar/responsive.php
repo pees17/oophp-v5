@@ -100,6 +100,11 @@ return [
                         "url" => "textfilter-demo",
                         "title" => "Demo av klassen TextFilter",
                     ],
+                    [
+                        "text" => "Content database",
+                        "url" => "kmom06",
+                        "title" => "Content database, with pages and blog posts",
+                    ],
                 ],
             ],
         ],

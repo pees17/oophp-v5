@@ -29,8 +29,7 @@ if (!$res) {
         <td class="center">
         <a class="icon" title="Edit movie" href="<?= url("movie/edit/$row->id") ?>">Edit</a>
         <a class="icon" title="Delete movie" href="<?= url("movie/delete/$row->id") ?>">Delete</a>
-    </a>
-</td>
+    </td>
     </tr>
 <?php endforeach; ?>
 </table>

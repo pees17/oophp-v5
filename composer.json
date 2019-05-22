@@ -11,8 +11,7 @@
     },
     "require": {
         "anax/anax-oophp-me": "^2.0.0@beta",
-        "anax/database": "^2.2",
-        "components/font-awesome": "^5.4"
+        "anax/database": "^2.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^7"
