@@ -40,6 +40,7 @@ class ContentController implements AppInjectableInterface
 
         // Add view
         $data = [
+            "edit" => false,
             "res" => $res,
         ];
         $this->app->page->add("content/header");

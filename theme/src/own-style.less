@@ -216,6 +216,7 @@ table.movie {
     td,
     th {
         padding: 4px;
+
     }
 
     tr .right {
@@ -265,6 +266,11 @@ table.content {
 
     border-collapse: collapse;
     margin: 2em 0 1em;
+    font-size: 14px;
+    font-family: initial;
+
+    table-layout: fixed;
+    width: 100%;
 
     tr:hover {
         background-color: #eee;
@@ -276,7 +282,29 @@ table.content {
 
     td,
     th {
-        padding: 4px;
+        padding: 1px 2px;
+        white-space: nowrap;
+        overflow: hidden;
+
+        &.w4 {
+            width: 4%;
+        }
+
+        &.w6 {
+            width: 6%;
+        }
+
+        &.w17 {
+            width: 17%;
+        }
+
+        &.w18 {
+            width: 18%;
+        }
+    }
+
+    td {
+        text-overflow: ellipsis;
     }
 
     tr .right {
@@ -289,10 +317,6 @@ table.content {
 
     tr .center {
         text-align: center;
-    }
-
-    tr:nth-of-type(2) td {
-        padding-top: 12px;
     }
 }
 

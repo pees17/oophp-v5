@@ -4209,6 +4209,10 @@ form.movie p:last-of-type {
 table.content {
   border-collapse: collapse;
   margin: 2em 0 1em;
+  font-size: 14px;
+  font-family: initial;
+  table-layout: fixed;
+  width: 100%;
 }
 table.content a {
   text-decoration: none;
@@ -4222,7 +4226,28 @@ table.content th {
 }
 table.content td,
 table.content th {
-  padding: 4px;
+  padding: 1px 2px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+table.content td.w4,
+table.content th.w4 {
+  width: 4%;
+}
+table.content td.w6,
+table.content th.w6 {
+  width: 6%;
+}
+table.content td.w17,
+table.content th.w17 {
+  width: 17%;
+}
+table.content td.w18,
+table.content th.w18 {
+  width: 18%;
+}
+table.content td {
+  text-overflow: ellipsis;
 }
 table.content tr .right {
   text-align: right;
@@ -4232,7 +4257,4 @@ table.content tr .left {
 }
 table.content tr .center {
   text-align: center;
-}
-table.content tr:nth-of-type(2) td {
-  padding-top: 12px;
 }
