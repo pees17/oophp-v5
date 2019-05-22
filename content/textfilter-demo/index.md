@@ -12,4 +12,7 @@ Följande filtreringar kan göras:
 
 För att se effekten av dessa 4 filtreringar så klicka på respektive länk nedan. Varje länk visar den oformatterade texten, den formatterade texten (med html-taggar), samt den formatterade texten som den ser ut i en webbläsare.
 
-[bbcode2html](textfilter/bbcode)
+* [Test bbcode2html](textfilter/bbcode)
+* [Test clickable](textfilter/clickable)
+* [Test Markdown](textfilter/markdown)
+* [Test nl2br](textfilter/nl2br)

@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v6.0.2 (2019-05-22)
+------------------------
+* Ready with TextFilter.
+
 v6.0.1 (2019-05-22)
 ------------------------
 * First filter in TextFilter working.
