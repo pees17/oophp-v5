@@ -40,11 +40,42 @@ class ContentController implements AppInjectableInterface
 
         // Add view
         $data = [
-            "edit" => false,
             "res" => $res,
         ];
         $this->app->page->add("content/header");
         $this->app->page->add("content/index", $data);
+        // $this->app->page->add("content/footer");
+
+        // Render view
+        return $this->app->page->render([
+            "title" => $title,
+        ]);
+    }
+
+
+    /**
+     * This is the admin method action, it handles:
+     * GET mountpoint/admin
+     * It will render the view that lists all content in the database, and
+     * administrate it (CRUD).
+     *
+     * @return object rendering the admin view
+     */
+    public function adminActionGet() : object
+    {
+        $title = "Admin content";
+
+        // Get data from database
+        $this->app->db->connect();
+        $sql = "SELECT * FROM content;";
+        $res = $this->app->db->executeFetchAll($sql);
+
+        // Add view
+        $data = [
+            "res" => $res,
+        ];
+        $this->app->page->add("content/header");
+        $this->app->page->add("content/admin", $data);
         $this->app->page->add("content/footer");
 
         // Render view

@@ -2,7 +2,7 @@
 namespace Anax\View;
 
 /**
- * Render the view to show all content
+ * Render the view to show all content, and administrate it (CRUD)
  */
 
 if (!$res) {
@@ -11,28 +11,25 @@ if (!$res) {
 
 ?><table class="content">
     <tr>
-        <th class="center">Rad</th>
-        <th class="center">Id</th>
-        <th class="left">Titel</th>
-        <th class="center">Type</th>
-        <th class="center">Published</th>
-        <th class="center">Created</th>
-        <th class="center">Updated</th>
-        <th class="center">Deleted</th>
-        <th class="center">Action</th>
+        <th class="center w3">Id</th>
+        <th class="left w19">Titel</th>
+        <th class="center w6">Type</th>
+        <th class="center w16">Published</th>
+        <th class="center w16">Created</th>
+        <th class="center w16">Updated</th>
+        <th class="center w16">Deleted</th>
+        <th class="center w8">Action</th>
     </tr>
-<?php $id = -1; foreach ($res as $row) :
-    $id++; ?>
+    <?php foreach ($res as $row) : ?>
     <tr>
-        <td class="center"><?= $id ?></td>
-        <td class="center"><?= $row->id ?></td>
-        <td class="left"><?= $row->title ?></td>
-        <td class="center"><?= $row->type ?></td>
-        <td class="center"><?= $row->published ?></td>
-        <td class="center"><?= $row->created ?></td>
-        <td class="center"><?= $row->updated ?></td>
-        <td class="center"><?= $row->deleted ?></td>
-        <td class="center">
+        <td class="center w3"><?= $row->id ?></td>
+        <td class="left w19"><?= $row->title ?></td>
+        <td class="center w6"><?= $row->type ?></td>
+        <td class="center w16"><?= $row->published ?></td>
+        <td class="center w16"><?= $row->created ?></td>
+        <td class="center w16"><?= $row->updated ?></td>
+        <td class="center w16"><?= $row->deleted ?></td>
+        <td class="center w8">
         <a class="icon" title="Edit content" href="<?= url("content/edit/$row->id") ?>">
             <i class="fas fa-edit" aria-hidden="true"></i>
         </a>
@@ -41,5 +38,5 @@ if (!$res) {
         </a>
         </td>
     </tr>
-<?php endforeach; ?>
+    <?php endforeach; ?>
 </table>

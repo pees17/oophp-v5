@@ -4230,6 +4230,10 @@ table.content th {
   white-space: nowrap;
   overflow: hidden;
 }
+table.content td.w3,
+table.content th.w3 {
+  width: 3%;
+}
 table.content td.w4,
 table.content th.w4 {
   width: 4%;
@@ -4237,6 +4241,14 @@ table.content th.w4 {
 table.content td.w6,
 table.content th.w6 {
   width: 6%;
+}
+table.content td.w8,
+table.content th.w8 {
+  width: 8%;
+}
+table.content td.w16,
+table.content th.w16 {
+  width: 16%;
 }
 table.content td.w17,
 table.content th.w17 {

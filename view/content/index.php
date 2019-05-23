@@ -20,8 +20,8 @@ if (!$res) {
         <th class="center w17">Updated</th>
         <th class="center w17">Deleted</th>
     </tr>
-<?php $id = -1; foreach ($res as $row) :
-    $id++; ?>
+    <?php $id = -1; foreach ($res as $row) :
+        $id++; ?>
     <tr>
         <td class="center w4"><?= $id ?></td>
         <td class="center w4"><?= $row->id ?></td>
@@ -32,5 +32,5 @@ if (!$res) {
         <td class="center w17"><?= $row->updated ?></td>
         <td class="center w17"><?= $row->deleted ?></td>
     </tr>
-<?php endforeach; ?>
+    <?php endforeach; ?>
 </table>
