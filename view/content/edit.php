@@ -45,7 +45,8 @@ if (!$res) {
     <p>
         <button type="submit" name="doSave"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
         <button type="reset"><i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
-        <button type="submit" name="doDelete"><i class="fas fa-trash-alt" aria-hidden="true"></i> Delete</button>
+        <button type="submit" name="doDelete" formaction=<?= url("content/delete/$res->id") ?>>
+        <i class="fas fa-trash-alt" aria-hidden="true"></i> Delete</button>
     </p>
 
     </fieldset>

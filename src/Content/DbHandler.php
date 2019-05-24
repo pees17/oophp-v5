@@ -98,6 +98,22 @@ class DbHandler
     }
 
 
+    /**
+     * Delete a row in the content table
+     *
+     * @param \Anax\Database\Database $db the framework database handler
+     * @param int $id the id in the database
+     *
+     * @return void
+     */
+    public function delete($db, $id)
+    {
+        // Update the database
+        $sql = "DELETE FROM content WHERE id = ?;";
+        $db->execute($sql, [$id]);
+    }
+
+
     //
     //
     // /**

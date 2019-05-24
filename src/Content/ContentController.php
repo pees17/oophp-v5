@@ -211,25 +211,26 @@ class ContentController implements AppInjectableInterface
      * GET mountpoint/delete
      * It will render the view to delete a movie
      *
-     * @param string $movieId the id of the movie to delete
+     * @param string $id the id of the content to delete
      *
-     * @return object rendering the delete movie view
+     * @return object rendering the delete content view
      */
-    public function deleteActionGet($movieId) : object
+    public function deleteActionGet($id) : object
     {
-        $title = "Delete movie";
+        $title = "Delete content";
+        if (!is_numeric($id)) {
+            throw new \Exception("Not valid for content id.");
+        }
 
         // Get data from database
-        $this->app->db->connect();
-        $sql = "SELECT * FROM movie WHERE id = ?;";
-        $res = $this->app->db->executeFetchAll($sql, [$movieId]);
+        $res = $this->dbHandler->fetchId($this->app->db, $id);
 
+        // Add view
         $data = [
             "res" => $res,
         ];
-        $this->app->page->add("movie/header");
-        $this->app->page->add("movie/delete", $data);
-        $this->app->page->add("movie/footer");
+        $this->app->page->add("content/header");
+        $this->app->page->add("content/delete", $data);
 
         // Render view
         return $this->app->page->render([
@@ -241,106 +242,21 @@ class ContentController implements AppInjectableInterface
     /**
      * This is the delete method action, it handles:
      * POST mountpoint/delete
-     * It will delete a movie and then render the view to view all movies
+     * It will delete a content and then redirect to the admin route
      *
-     * @param string $movieId the id of the movie to delete
+     * @param string $id the id of the content to delete
      *
-     * @return object redirect to mountpoint/index
+     * @return object redirect to mountpoint/admin
      */
-    public function deleteActionPost($movieId) : object
+    public function deleteActionPost($id) : object
     {
-        // Get data from database
+        // Delete content in database
         $this->app->db->connect();
-        $sql = "DELETE FROM movie WHERE id = ?;";
-        $this->app->db->execute($sql, [$movieId]);
+        $sql = "DELETE FROM content WHERE id = ?;";
+        $this->app->db->execute($sql, [$id]);
 
         // Redirect to index
-        return $this->app->response->redirect("movie/index");
-    }
-
-
-    /**
-     * This is the searchtitle method action, it handles:
-     * GET mountpoint/searchtitle
-     * It will render the view to search for movies based on their title
-     * and view the movies that match
-     *
-     * @return object rendering the searchtitle view and result
-     */
-    public function searchTitleActionGet() : object
-    {
-        $title = "Search on title";
-
-        // Get GET data
-        $searchTitle = $this->app->request->getGet("searchTitle");
-
-        // Get data from database
-        $this->app->db->connect();
-        $sql = "SELECT * FROM movie WHERE title LIKE ?;";
-        $res = $this->app->db->executeFetchAll($sql, [$searchTitle]);
-
-        // Add view
-        $data = [
-            "res" => $res,
-            "searchTitle" => $searchTitle,
-        ];
-        $this->app->page->add("movie/header");
-        $this->app->page->add("movie/searchtitle", $data);
-        $this->app->page->add("movie/index", $data);
-        $this->app->page->add("movie/footer");
-
-        // Render view
-        return $this->app->page->render([
-            "title" => $title,
-        ]);
-    }
-
-
-    /**
-     * This is the searchyear method action, it handles:
-     * GET mountpoint/searchyear
-     * It will render the view to search for movies based on their year
-     * and view the movies that match
-     *
-     * @return object rendering the searchyear view and result
-     */
-    public function searchYearActionGet() : object
-    {
-        $title = "Search on year";
-
-        // Get GET data
-        $year1 = $this->app->request->getGet("year1");
-        $year2 = $this->app->request->getGet("year2");
-
-        // Get data from database
-        $this->app->db->connect();
-        $res = null;
-        if ($year1 && $year2) {
-            $sql = "SELECT * FROM movie WHERE year >= ? AND year <= ?;";
-            $res = $this->app->db->executeFetchAll($sql, [$year1, $year2]);
-        } elseif ($year1) {
-            $sql = "SELECT * FROM movie WHERE year >= ?;";
-            $res = $this->app->db->executeFetchAll($sql, [$year1]);
-        } elseif ($year2) {
-            $sql = "SELECT * FROM movie WHERE year <= ?;";
-            $res = $this->app->db->executeFetchAll($sql, [$year2]);
-        }
-
-        // Add view
-        $data = [
-            "res" => $res,
-            "year1" => $year1,
-            "year2" => $year2,
-        ];
-        $this->app->page->add("movie/header");
-        $this->app->page->add("movie/searchyear", $data);
-        $this->app->page->add("movie/index", $data);
-        $this->app->page->add("movie/footer");
-
-        // Render view
-        return $this->app->page->render([
-            "title" => $title,
-        ]);
+        return $this->app->response->redirect("content/admin");
     }
 
 
