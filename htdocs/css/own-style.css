@@ -4270,3 +4270,31 @@ table.content tr .left {
 table.content tr .center {
   text-align: center;
 }
+form.content {
+  margin-top: 1em;
+}
+form.content fieldset {
+  padding-top: 12px;
+}
+form.content label {
+  font-size: 12px;
+}
+form.content input[type="text"] {
+  width: 500px;
+  padding-left: 2px;
+  height: 24px;
+}
+form.content textarea {
+  width: 500px;
+  padding-left: 2px;
+  font-family: monospace;
+  font-size: large;
+  line-height: 1.1;
+}
+form.content p {
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+}
+form.content p:last-of-type {
+  margin-top: 2em;
+}

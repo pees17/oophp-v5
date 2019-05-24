@@ -14,10 +14,29 @@ use Anax\Commons\AppInjectableTrait;
  * requests for that mount point.
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class ContentController implements AppInjectableInterface
 {
     use AppInjectableTrait;
+
+    /**
+     * @var DbHandler $dbHandler database handler
+     */
+    private $dbHandler;
+
+    /**
+     * The initialize method is optional and will always be called before
+     * the target method/action.
+     *
+     * @return void
+     */
+    public function initialize() : void
+    {
+        // Connect to database and create handler
+        $this->app->db->connect();
+        $this->dbHandler = new DbHandler();
+    }
 
 
     /**
@@ -34,9 +53,7 @@ class ContentController implements AppInjectableInterface
         $title = "Show all content";
 
         // Get data from database
-        $this->app->db->connect();
-        $sql = "SELECT * FROM content;";
-        $res = $this->app->db->executeFetchAll($sql);
+        $res = $this->dbHandler->fetchAll($this->app->db);
 
         // Add view
         $data = [
@@ -44,14 +61,12 @@ class ContentController implements AppInjectableInterface
         ];
         $this->app->page->add("content/header");
         $this->app->page->add("content/index", $data);
-        // $this->app->page->add("content/footer");
 
         // Render view
         return $this->app->page->render([
             "title" => $title,
         ]);
     }
-
 
     /**
      * This is the admin method action, it handles:
@@ -66,9 +81,7 @@ class ContentController implements AppInjectableInterface
         $title = "Admin content";
 
         // Get data from database
-        $this->app->db->connect();
-        $sql = "SELECT * FROM content;";
-        $res = $this->app->db->executeFetchAll($sql);
+        $res = $this->dbHandler->fetchAll($this->app->db);
 
         // Add view
         $data = [
@@ -86,52 +99,68 @@ class ContentController implements AppInjectableInterface
 
 
     /**
-     * This is the add method action, it handles:
-     * GET mountpoint/add
-     * It will add a new movie to the database an then redirct to the
-     * edit movie view.
+     * This is the create method action, it handles:
+     * GET mountpoint/create
+     * It will render a view to create new content in the database
+     *
+     * @return object rendering the create view
+     */
+    public function createActionGet() : object
+    {
+        $title = "Create content";
+
+        // Add view
+        $this->app->page->add("content/header");
+        $this->app->page->add("content/create");
+
+        // Render view
+        return $this->app->page->render([
+            "title" => $title,
+        ]);
+    }
+
+    /**
+     * This is the create method action, it handles:
+     * POST mountpoint/create
+     * It will create the content an then redirect to the edit route.
      *
      * @return object redirect to mountpoint/edit
      */
-    public function addActionGet() : object
+    public function createActionPost() : object
     {
-        // Update the database
-        $this->app->db->connect();
-        $sql = "INSERT INTO movie (title, year, image) VALUES (?, ?, ?);";
-        $this->app->db->execute($sql, ["A title", 2019, "img/noimage.png"]);
+        // Get POST data
+        $contentTitle = [$this->app->request->getPost("contentTitle")];
 
-        // Get the id of the created movie
-        $movieId = $this->app->db->lastInsertId();
+        // Insert into database
+        $id = $this->dbHandler->insert($this->app->db, ["title"], $contentTitle);
 
         // Redirect to edit
-        return $this->app->response->redirect("movie/edit/$movieId");
+        return $this->app->response->redirect("content/edit/$id");
     }
-
-
     /**
      * This is the edit method action, it handles:
      * GET mountpoint/edit
-     * It will render the view to edit a movie
+     * It will render the view to edit a content in the database
      *
-     * @param string $movieId the id of the movie to edit
+     * @param string $id the id of the content to edit
      *
-     * @return object rendering the edit movie view
+     * @return object rendering the edit content view
      */
-    public function editActionGet($movieId) : object
+    public function editActionGet($id) : object
     {
-        $title = "Edit movie";
+        $title = "Edit content";
+        if (!is_numeric($id)) {
+            throw new \Exception("Not valid for content id.");
+        }
 
         // Get data from database
-        $this->app->db->connect();
-        $sql = "SELECT * FROM movie WHERE id = ?;";
-        $res = $this->app->db->executeFetchAll($sql, [$movieId]);
+        $res = $this->dbHandler->fetchId($this->app->db, $id);
 
         $data = [
             "res" => $res,
         ];
-        $this->app->page->add("movie/header");
-        $this->app->page->add("movie/edit", $data);
-        $this->app->page->add("movie/footer");
+        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit", $data);
 
         // Render view
         return $this->app->page->render([
@@ -143,26 +172,32 @@ class ContentController implements AppInjectableInterface
     /**
      * This is the edit method action, it handles:
      * POST mountpoint/edit
-     * It will update the movie an then redirect back to to the edit view.
+     * It will update the content an then redirect back to to the edit route.
      *
-     * @param string $movieId the id of the movie to edit
+     * @param string $id the id of the content to edit
      *
      * @return object redirect to mountpoint/edit
      */
-    public function editActionPost($movieId) : object
+    public function editActionPost($id) : object
     {
         // Get POST data
-        $movieTitle = $this->app->request->getPost("movieTitle");
-        $movieYear  = $this->app->request->getPost("movieYear");
-        $movieImage = $this->app->request->getPost("movieImage");
+        $params = $this->getEditPost();
+
+        // Make sure 'unique' fields are unique
+        if (!$params["contentSlug"]) {
+            $params["contentSlug"] = slugify($params["contentTitle"]);
+        }
+        if (!$params["contentPath"]) {
+            $params["contentPath"] = null;
+        }
 
         // Update the database
-        $this->app->db->connect();
-        $sql = "UPDATE movie SET title = ?, year = ?, image = ? WHERE id = ?;";
-        $this->app->db->execute($sql, [$movieTitle, $movieYear, $movieImage, $movieId]);
+        $params["id"] = $id;
+        $fields = ["title", "path", "slug", "data", "type", "filter", "published"];
+        $this->dbHandler->update($this->app->db, $fields, array_values($params));
 
         // Redirect to edit
-        return $this->app->response->redirect("movie/edit/$movieId");
+        return $this->app->response->redirect("content/edit/$id");
     }
 
 
@@ -331,5 +366,27 @@ class ContentController implements AppInjectableInterface
         return $this->app->page->render([
             "title" => $title,
         ]);
+    }
+
+
+    /**
+     * This is a private help method to get all post parameters
+     * from the edit form into an array.
+     *
+     * @return array the post parameters
+     */
+    private function getEditPost() : array
+    {
+        // Get POST data
+        $params = [];
+        $params["contentTitle"] = $this->app->request->getPost("contentTitle");
+        $params["contentPath"] = $this->app->request->getPost("contentPath");
+        $params["contentSlug"] = $this->app->request->getPost("contentSlug");
+        $params["contentData"] = $this->app->request->getPost("contentData");
+        $params["contentType"] = $this->app->request->getPost("contentType");
+        $params["contentFilter"] = $this->app->request->getPost("contentFilter");
+        $params["contentPublish"] = $this->app->request->getPost("contentPublish");
+
+        return $params;
     }
 }
