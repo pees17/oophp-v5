@@ -183,13 +183,18 @@ class ContentController implements AppInjectableInterface
         // Get POST data
         $params = $this->getEditPost();
 
-        // Make sure 'unique' fields are unique
-        if (!$params["contentSlug"]) {
-            $params["contentSlug"] = slugify($params["contentTitle"]);
-        }
+        // Not to get a database "uniqe" error if path field is empty
         if (!$params["contentPath"]) {
             $params["contentPath"] = null;
         }
+
+        // Generate slug if slug field is empty
+        if (!$params["contentSlug"]) {
+            $params["contentSlug"] = slugify($params["contentTitle"]);
+        }
+        // Make sure slug is unique
+        $slugs = $this->dbHandler->fetchSlugs($this->app->db);
+        $params["contentSlug"] = makeSlugUnique($params["contentSlug"], $slugs);
 
         // Update the database
         $params["id"] = $id;

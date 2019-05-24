@@ -24,6 +24,22 @@ class DbHandler
 
 
     /**
+     * Return slug from all rows from the content database
+     *
+     * @param \Anax\Database\Database $db the framework database handler
+     *
+     * @return array all slugs in the content table
+     */
+    public function fetchSlugs($db)
+    {
+        $sql = "SELECT * FROM content;";
+        return array_map(function ($row) {
+            return $row->slug;
+        }, $db->executeFetchAll($sql));
+    }
+
+
+    /**
      * Return the row with a specific id from the content database
      *
      * @param \Anax\Database\Database $db the framework database handler
@@ -55,7 +71,7 @@ class DbHandler
 
         // Insert
         $sql = "INSERT INTO content ($fields) VALUES ($qMarks);";
-        $db->execute($sql, [$values]);
+        $db->execute($sql, $values);
 
         // Return the id of the created content
         return $db->lastInsertId();
