@@ -4302,3 +4302,6 @@ form.content p {
 form.content p:last-of-type {
   margin-top: 2em;
 }
+form.content p.reset-button {
+  margin-top: 0.5em;
+}

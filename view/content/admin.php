@@ -13,7 +13,8 @@ if (!$res) {
     <tr>
         <th class="center w3">Id</th>
         <th class="left w19">Titel</th>
-        <th class="center w6">Type</th>
+        <th class="center w6">Path</th>
+        <th class="center w6">Slug</th>
         <th class="center w16">Published</th>
         <th class="center w16">Created</th>
         <th class="center w16">Updated</th>
@@ -24,7 +25,8 @@ if (!$res) {
     <tr>
         <td class="center w3"><?= $row->id ?></td>
         <td class="left w19"><?= $row->title ?></td>
-        <td class="center w6"><?= $row->type ?></td>
+        <td class="center w6"><?= $row->path ?></td>
+        <td class="center w6"><?= $row->slug ?></td>
         <td class="center w16"><?= $row->published ?></td>
         <td class="center w16"><?= $row->created ?></td>
         <td class="center w16"><?= $row->updated ?></td>

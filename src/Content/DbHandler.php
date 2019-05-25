@@ -99,7 +99,9 @@ class DbHandler
 
 
     /**
-     * Delete a row in the content table
+     * Delete a row in the content table. It is a soft delete, meaning
+     * that the row is still in the database but the deletefield is set
+     * current time.
      *
      * @param \Anax\Database\Database $db the framework database handler
      * @param int $id the id in the database
@@ -109,7 +111,7 @@ class DbHandler
     public function delete($db, $id)
     {
         // Update the database
-        $sql = "DELETE FROM content WHERE id = ?;";
+        $sql = "UPDATE content SET deleted=NOW() WHERE id = ?;";
         $db->execute($sql, [$id]);
     }
 

@@ -89,7 +89,6 @@ class ContentController implements AppInjectableInterface
         ];
         $this->app->page->add("content/header");
         $this->app->page->add("content/admin", $data);
-        $this->app->page->add("content/footer");
 
         // Render view
         return $this->app->page->render([
@@ -209,7 +208,7 @@ class ContentController implements AppInjectableInterface
     /**
      * This is the delete method action, it handles:
      * GET mountpoint/delete
-     * It will render the view to delete a movie
+     * It will render the view to delete a content
      *
      * @param string $id the id of the content to delete
      *
@@ -250,10 +249,8 @@ class ContentController implements AppInjectableInterface
      */
     public function deleteActionPost($id) : object
     {
-        // Delete content in database
-        $this->app->db->connect();
-        $sql = "DELETE FROM content WHERE id = ?;";
-        $this->app->db->execute($sql, [$id]);
+        // Soft delete content in database
+        $this->dbHandler->delete($this->app->db, $id);
 
         // Redirect to index
         return $this->app->response->redirect("content/admin");
@@ -262,31 +259,89 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This is the reset method action, it handles:
-     * ANY METHOD mountpoint/reset
+     * GET METHOD mountpoint/reset
      * It will render the reset view to reset the database to its
      * initial state
      *
      * @return object rendering the reset view
      */
-    public function resetAction() : object
+    public function resetActionGet() : object
     {
         $title = "Resetting the database";
 
-        // Get configuration
-        $dbConfig = $this->app->configuration->load("database");
+        // Add view
+        $this->app->page->add("content/header");
+        $this->app->page->add("content/reset");
+
+        // Render view
+        return $this->app->page->render([
+            "title" => $title
+        ]);
+    }
+
+
+    /**
+     * This is the reset method action, it handles:
+     * POST METHOD mountpoint/reset
+     * It will reset the database to its initial state and render
+     * a view to show the result
+     *
+     * @return object rendering the reset view
+     */
+    public function resetActionPost() : object
+    {
+        $title = "Resetting the database";
+
+        // Reset
+        $output = $this->resetDb();
 
         // Add view
         $data = [
-            "config" => $dbConfig["config"],
+            "output" => $output
         ];
-        $this->app->page->add("movie/header");
-        $this->app->page->add("movie/reset", $data);
-        $this->app->page->add("movie/footer");
+        $this->app->page->add("content/header");
+        $this->app->page->add("content/reset-result", $data);
 
         // Render view
         return $this->app->page->render([
             "title" => $title,
         ]);
+    }
+
+
+    /**
+     * This is a private method to do the resetting of the database.
+     *
+     * @return string the result of the reset
+     */
+    private function resetDb() : string
+    {
+        // Get configuration
+        $config = $this->app->configuration->load("database")["config"];
+
+        // Set path to sql file and mysql command
+        $file   = "../sql/content/setup.sql";
+        $mysql  = $config["mysql"];
+
+        // Extract hostname and databasename from dsn
+        $dsnDetail = [];
+        preg_match("/mysql:host=(.+);dbname=([^;.]+)/", $config["dsn"], $dsnDetail);
+        $host = $dsnDetail[1];
+        $database = $dsnDetail[2];
+        $login = $config["username"];
+        $password = $config["password"];
+
+        // Execute command and return result
+        $command = "$mysql -h{$host} -u{$login} -p{$password} $database < $file 2>&1";
+        $output = [];
+        $status = null;
+        exec($command, $output, $status);
+        $output = "<p>The command was: <code>$command</code>.<br>The command exit status was $status."
+            . "<br>The output from the command was:</p><pre>"
+            . print_r($output, 1)
+            . "</pre>";
+
+        return $output;
     }
 
 
