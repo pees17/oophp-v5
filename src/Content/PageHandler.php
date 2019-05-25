@@ -2,45 +2,40 @@
 namespace Peo\Content;
 
 /**
- * A class with methods to handle CRUD of a database.
+ * A class with methods to handle content of type page in a database.
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  * @SuppressWarnings(PHPMD.ShortVariable)
  */
-class DbHandler
+class PageHandler
 {
     /**
-     * Return all rows from the content database
+     * Return all rows from the content table where type = 'page'
      *
      * @param \Anax\Database\Database $db the framework database handler
      *
-     * @return array all rows in the content table
+     * @return array all 'page' rows in the content table
      */
     public function fetchAll($db)
     {
-        $sql = "SELECT * FROM content;";
-        return $db->executeFetchAll($sql);
+        $sql = <<<EOD
+SELECT
+    *,
+    CASE
+        WHEN (deleted <= NOW()) THEN "isDeleted"
+        WHEN (published <= NOW()) THEN "isPublished"
+        ELSE "notPublished"
+    END AS status
+FROM content
+WHERE type=?
+;
+EOD;
+        return $db->executeFetchAll($sql, ["page"]);
     }
 
 
     /**
-     * Return slug from all rows from the content database
-     *
-     * @param \Anax\Database\Database $db the framework database handler
-     *
-     * @return array all slugs in the content table
-     */
-    public function fetchSlugs($db)
-    {
-        $sql = "SELECT * FROM content;";
-        return array_map(function ($row) {
-            return $row->slug;
-        }, $db->executeFetchAll($sql));
-    }
-
-
-    /**
-     * Return the row with a specific id from the content database
+     * Return the row with a specific id from the content table
      *
      * @param \Anax\Database\Database $db the framework database handler
      * @param int $id the id in the database
@@ -114,4 +109,5 @@ class DbHandler
         $sql = "UPDATE content SET deleted=NOW() WHERE id = ?;";
         $db->execute($sql, [$id]);
     }
+
 }

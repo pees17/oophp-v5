@@ -11,27 +11,27 @@ if (!$res) {
 
 ?><table class="content">
     <tr>
-        <th class="center w3">Id</th>
-        <th class="left w19">Titel</th>
-        <th class="center w6">Path</th>
-        <th class="center w6">Slug</th>
-        <th class="center w16">Published</th>
-        <th class="center w16">Created</th>
-        <th class="center w16">Updated</th>
-        <th class="center w16">Deleted</th>
-        <th class="center w8">Action</th>
+        <th class="center">Id</th>
+        <th class="left">Titel</th>
+        <th class="left nowrap">Path</th>
+        <th class="left">Slug</th>
+        <th class="center fixed-width">Published</th>
+        <th class="center fixed-width">Created</th>
+        <th class="center fixed-width">Updated</th>
+        <th class="center fixed-width">Deleted</th>
+        <th class="center">Action</th>
     </tr>
     <?php foreach ($res as $row) : ?>
     <tr>
-        <td class="center w3"><?= $row->id ?></td>
-        <td class="left w19"><?= $row->title ?></td>
-        <td class="center w6"><?= $row->path ?></td>
-        <td class="center w6"><?= $row->slug ?></td>
-        <td class="center w16"><?= $row->published ?></td>
-        <td class="center w16"><?= $row->created ?></td>
-        <td class="center w16"><?= $row->updated ?></td>
-        <td class="center w16"><?= $row->deleted ?></td>
-        <td class="center w8">
+        <td class="center"><?= $row->id ?></td>
+        <td class="left"><?= $row->title ?></td>
+        <td class="left nowrap"><?= $row->path ?></td>
+        <td class="left"><?= $row->slug ?></td>
+        <td class="center fixed-width"><?= $row->published ?></td>
+        <td class="center fixed-width"><?= $row->created ?></td>
+        <td class="center fixed-width"><?= $row->updated ?></td>
+        <td class="center fixed-width"><?= $row->deleted ?></td>
+        <td class="center">
         <a class="icon" title="Edit content" href="<?= url("content/edit/$row->id") ?>">
             <i class="fas fa-edit" aria-hidden="true"></i>
         </a>

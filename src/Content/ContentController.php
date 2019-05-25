@@ -21,9 +21,13 @@ class ContentController implements AppInjectableInterface
     use AppInjectableTrait;
 
     /**
-     * @var DbHandler $dbHandler database handler
+    * @var DbHandler    $dbHandler database handler
+    * @var PageHandler  $PageHandler database handler
+    * @var PostHandler  $PostHandler database handler
      */
     private $dbHandler;
+    private $pageHandler;
+    // private $postHandler;
 
     /**
      * The initialize method is optional and will always be called before
@@ -36,6 +40,8 @@ class ContentController implements AppInjectableInterface
         // Connect to database and create handler
         $this->app->db->connect();
         $this->dbHandler = new DbHandler();
+        $this->pageHandler = new PageHandler();
+        // $this->postHandler = new PostHandler();
     }
 
 
@@ -301,6 +307,34 @@ class ContentController implements AppInjectableInterface
         ];
         $this->app->page->add("content/header");
         $this->app->page->add("content/reset-result", $data);
+
+        // Render view
+        return $this->app->page->render([
+            "title" => $title,
+        ]);
+    }
+
+
+    /**
+     * This is the pages method action, it handles:
+     * GET mountpoint/pages
+     * It will render the view that lists all pages in the database.
+     *
+     * @return object rendering the pages view
+     */
+    public function pagesActionGet() : object
+    {
+        $title = "View pages";
+
+        // Get data from database
+        $res = $this->pageHandler->fetchAll($this->app->db);
+
+        // Add view
+        $data = [
+            "res" => $res,
+        ];
+        $this->app->page->add("content/header");
+        $this->app->page->add("content/pages", $data);
 
         // Render view
         return $this->app->page->render([

@@ -263,65 +263,45 @@ form.movie p {
  */
 
 table.content {
-
     a {
         text-decoration: none;
         color: inherit;
     }
 
-    border-collapse: collapse;
+    border-collapse: separate;
     margin: 2em 0 1em;
     font-size: 14px;
     font-family: initial;
 
-    table-layout: fixed;
-    width: 100%;
+    &.page {
+        font-size: 16px;
+
+        a {
+            text-decoration: underline;
+            color: #33b;
+        }
+    }
 
     tr:hover {
         background-color: #eee;
     }
 
     th {
-        border-bottom: 2px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        background-color: #ddd;
     }
 
     td,
     th {
-        padding: 1px 2px;
-        white-space: nowrap;
-        overflow: hidden;
+        padding: 1px 4px;
 
-        &.w3 {
-            width: 3%;
+        &.fixed-width {
+            min-width: 75px;
         }
 
-        &.w4 {
-            width: 4%;
+        &.nowrap {
+            white-space: nowrap;
         }
-
-        &.w6 {
-            width: 6%;
-        }
-
-        &.w8 {
-            width: 8%;
-        }
-
-        &.w16 {
-            width: 16%;
-        }
-
-        &.w17 {
-            width: 17%;
-        }
-
-        &.w18 {
-            width: 18%;
-        }
-    }
-
-    td {
-        text-overflow: ellipsis;
     }
 
     tr .right {
@@ -375,5 +355,8 @@ form.content {
             margin-top: 0.5em;
         }
     }
+}
 
+h1.content {
+    margin: 16px 0;
 }

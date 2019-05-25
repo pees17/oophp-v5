@@ -4211,59 +4211,40 @@ form.movie p:last-of-type {
  * Style for the content database
  */
 table.content {
-  border-collapse: collapse;
+  border-collapse: separate;
   margin: 2em 0 1em;
   font-size: 14px;
   font-family: initial;
-  table-layout: fixed;
-  width: 100%;
 }
 table.content a {
   text-decoration: none;
   color: inherit;
 }
+table.content.page {
+  font-size: 16px;
+}
+table.content.page a {
+  text-decoration: underline;
+  color: #33b;
+}
 table.content tr:hover {
   background-color: #eee;
 }
 table.content th {
-  border-bottom: 2px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  background-color: #ddd;
 }
 table.content td,
 table.content th {
-  padding: 1px 2px;
+  padding: 1px 4px;
+}
+table.content td.fixed-width,
+table.content th.fixed-width {
+  min-width: 75px;
+}
+table.content td.nowrap,
+table.content th.nowrap {
   white-space: nowrap;
-  overflow: hidden;
-}
-table.content td.w3,
-table.content th.w3 {
-  width: 3%;
-}
-table.content td.w4,
-table.content th.w4 {
-  width: 4%;
-}
-table.content td.w6,
-table.content th.w6 {
-  width: 6%;
-}
-table.content td.w8,
-table.content th.w8 {
-  width: 8%;
-}
-table.content td.w16,
-table.content th.w16 {
-  width: 16%;
-}
-table.content td.w17,
-table.content th.w17 {
-  width: 17%;
-}
-table.content td.w18,
-table.content th.w18 {
-  width: 18%;
-}
-table.content td {
-  text-overflow: ellipsis;
 }
 table.content tr .right {
   text-align: right;
@@ -4304,4 +4285,7 @@ form.content p:last-of-type {
 }
 form.content p.reset-button {
   margin-top: 0.5em;
+}
+h1.content {
+  margin: 16px 0;
 }

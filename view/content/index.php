@@ -11,26 +11,25 @@ if (!$res) {
 
 ?><table class="content">
     <tr>
-        <th class="center w4">Rad</th>
-        <th class="center w4">Id</th>
-        <th class="left w18">Titel</th>
-        <th class="center w6">Type</th>
-        <th class="center w17">Published</th>
-        <th class="center w17">Created</th>
-        <th class="center w17">Updated</th>
-        <th class="center w17">Deleted</th>
+        <th class="center">Id</th>
+        <th class="left">Titel</th>
+        <th class="left nowrap">Path</th>
+        <th class="left">Slug</th>
+        <th class="center fixed-width">Published</th>
+        <th class="center fixed-width">Created</th>
+        <th class="center fixed-width">Updated</th>
+        <th class="center fixed-width">Deleted</th>
     </tr>
-    <?php $id = -1; foreach ($res as $row) :
-        $id++; ?>
+    <?php foreach ($res as $row) : ?>
     <tr>
-        <td class="center w4"><?= $id ?></td>
-        <td class="center w4"><?= $row->id ?></td>
-        <td class="left w18"><?= $row->title ?></td>
-        <td class="center w6"><?= $row->type ?></td>
-        <td class="center w17"><?= $row->published ?></td>
-        <td class="center w17"><?= $row->created ?></td>
-        <td class="center w17"><?= $row->updated ?></td>
-        <td class="center w17"><?= $row->deleted ?></td>
+        <td class="center"><?= $row->id ?></td>
+        <td class="left"><?= $row->title ?></td>
+        <td class="left nowrap"><?= $row->path ?></td>
+        <td class="left"><?= $row->slug ?></td>
+        <td class="center fixed-width"><?= $row->published ?></td>
+        <td class="center fixed-width"><?= $row->created ?></td>
+        <td class="center fixed-width"><?= $row->updated ?></td>
+        <td class="center fixed-width"><?= $row->deleted ?></td>
     </tr>
     <?php endforeach; ?>
 </table>
