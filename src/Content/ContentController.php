@@ -344,6 +344,39 @@ class ContentController implements AppInjectableInterface
 
 
     /**
+     * This is the page method action, it handles:
+     * GET mountpoint/page
+     * It will render the view of a specific page.
+     *
+     * @param string $path to the page
+     *
+     * @return object rendering the page view
+     */
+    public function pageActionGet($path) : object
+    {
+        // Get data from database
+        $res = $this->pageHandler->fetchPage($this->app->db, $path);
+
+        // If no data the path was invalid
+        if (!$res) {
+            throw new \Anax\Route\Exception\NotFoundException;
+        }
+
+        // Add view
+        $title = $res->title;
+        $data = [
+            "res" => $res,
+        ];
+        $this->app->page->add("content/header");
+        $this->app->page->add("content/page", $data);
+
+        // Render view
+        return $this->app->page->render([
+            "title" => $title,
+        ]);
+    }
+
+    /**
      * This is a private method to do the resetting of the database.
      *
      * @return string the result of the reset

@@ -1,7 +1,15 @@
-<article>
+<?php
+namespace Anax\View;
+
+/**
+ * Render the view to show a specific page
+ */
+
+?><article>
     <header>
-        <h1><?= esc($content->title) ?></h1>
-        <p><i>Latest update: <time datetime="<?= esc($content->modified_iso8601) ?>" pubdate><?= esc($content->modified) ?></time></i></p>
+        <h1><?= esc($res->title) ?></h1>
+        <p><i>Latest update: <time datetime="<?= esc($res->modified_iso8601) ?>" pubdate>
+        <?= esc($res->modified) ?></time></i></p>
     </header>
-    <?= esc($content->data) ?>
+    <?= esc($res->data) ?>
 </article>

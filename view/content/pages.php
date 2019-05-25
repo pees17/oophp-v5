@@ -20,7 +20,7 @@ if (!$res) {
     <?php foreach ($res as $row) : ?>
     <tr>
         <td class="center"><?= $row->id ?></td>
-        <td class="left"><a href="<?= url("content/pages/$row->path") ?>"><?= $row->title ?></a></td>
+        <td class="left"><a href="<?= url("content/page/$row->path") ?>"><?= $row->title ?></a></td>
         <td class="left"><?= $row->type ?></td>
         <td class="left"><?= $row->status ?></td>
         <td class="center"><?= $row->published ?></td>

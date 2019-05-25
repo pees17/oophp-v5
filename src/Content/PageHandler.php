@@ -33,6 +33,32 @@ EOD;
         return $db->executeFetchAll($sql, ["page"]);
     }
 
+    /**
+     * Return the row from the content table where type = 'page' and
+     * path is $path
+     *
+     * @param \Anax\Database\Database $db the framework database handler
+     * @param string $path to the page
+     *
+     * @return array the matching row in the content table
+     */
+    public function fetchPage($db, $path)
+    {
+        $sql = <<<EOD
+SELECT
+    *,
+    DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS modified_iso8601,
+    DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS modified
+FROM content
+WHERE
+    path = ?
+    AND type = ?
+    AND (deleted IS NULL OR deleted > NOW())
+    AND published <= NOW()
+;
+EOD;
+        return $db->executeFetch($sql, [$path, "page"]);
+    }
 
     /**
      * Return the row with a specific id from the content table
