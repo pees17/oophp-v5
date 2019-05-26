@@ -20,8 +20,8 @@ class BlogHandler
         $sql = <<<EOD
 SELECT
     *,
-    DATE_FORMAT(GREATEST(COALESCE(updated, published), published), '%Y-%m-%dT%TZ') AS published_iso8601,
-    DATE_FORMAT(GREATEST(COALESCE(updated, published), published), '%Y-%m-%d') AS published
+    GREATEST(COALESCE(updated, published), published) AS published_iso8601,
+    GREATEST(COALESCE(updated, published), published) AS published
 FROM content
 WHERE
     type=?
@@ -47,8 +47,8 @@ EOD;
         $sql = <<<EOD
 SELECT
     *,
-    DATE_FORMAT(GREATEST(COALESCE(updated, published), published), '%Y-%m-%dT%TZ') AS published_iso8601,
-    DATE_FORMAT(GREATEST(COALESCE(updated, published), published), '%Y-%m-%d') AS published
+    GREATEST(COALESCE(updated, published), published) AS published_iso8601,
+    GREATEST(COALESCE(updated, published), published) AS published
 FROM content
 WHERE
     slug = ?
