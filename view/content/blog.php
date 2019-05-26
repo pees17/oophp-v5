@@ -4,13 +4,11 @@ namespace Anax\View;
 /**
  * Render the view to view all published blog posts
  */
-
 if (!$res) {
     return;
 }
-?>
-
-<article>
+$filter = new \Peo\MyTextFilter\TextFilter();
+?><article>
 
 <?php foreach ($res as $row) : ?>
 <section>
@@ -19,7 +17,7 @@ if (!$res) {
         <p><i>Published: <time datetime="<?= esc($row->published_iso8601) ?>" pubdate>
         <?= esc($row->published) ?></time></i></p>
     </header>
-    <?= esc($row->data) ?>
+    <?= $filter->parse(esc($row->data), explode(",", $row->filter)) ?>
 </section>
 <?php endforeach; ?>
 

@@ -33,14 +33,16 @@ class TextFilter
      */
     public function parse($text, $filters)
     {
-        // For each filter, call its function with the $text as parameter.
-        foreach ($filters as $filter) {
-            if (!isset($this->validFilters[$filter])) {
-                throw new \Exception("The filter [" .
-                implode(", ", $filters) .
-                "] is not a valid filter string due to '$filter'.");
+        if ($filters[0] != "") {
+            // For each filter, call its function with the $text as parameter.
+            foreach ($filters as $filter) {
+                if (!isset($this->validFilters[$filter])) {
+                    throw new \Exception("The filter [" .
+                    implode(", ", $filters) .
+                    "] is not a valid filter string due to '$filter'.");
+                }
+                $text = call_user_func_array([$this, $this->validFilters[$filter]], [$text]);
             }
-            $text = call_user_func_array([$this, $this->validFilters[$filter]], [$text]);
         }
         return $text;
     }

@@ -361,11 +361,11 @@ class ContentController implements AppInjectableInterface
         if (!$res) {
             throw new \Anax\Route\Exception\NotFoundException;
         }
-
         // Add view
         $title = $res->title;
         $data = [
             "res" => $res,
+            "filters" => explode(",", $res->filter)
         ];
         $this->app->page->add("content/header");
         $this->app->page->add("content/page", $data);
