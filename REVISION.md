@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v6.0.3 (2019-05-26)
+------------------------
+* All page and post views and CRUD is working correctly.
+
 v6.0.2 (2019-05-22)
 ------------------------
 * Ready with TextFilter.
