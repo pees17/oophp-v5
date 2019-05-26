@@ -1,7 +1,15 @@
-<article>
+<?php
+namespace Anax\View;
+
+/**
+ * Render the view to view a specific blog posts
+ */
+
+?><article>
     <header>
-        <h1><?= esc($content->title) ?></h1>
-        <p><i>Published: <time datetime="<?= esc($content->published_iso8601) ?>" pubdate><?= esc($content->published) ?></time></i></p>
+        <h1 class="content blog"><?= esc($res->title) ?></h1>
+        <p><i>Published: <time datetime="<?= esc($res->published_iso8601) ?>" pubdate>
+            <?= esc($res->published) ?></time></i></p>
     </header>
-    <?= esc($content->data) ?>
+    <?= esc($res->data) ?>
 </article>

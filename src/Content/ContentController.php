@@ -22,12 +22,12 @@ class ContentController implements AppInjectableInterface
 
     /**
     * @var DbHandler    $dbHandler database handler
-    * @var PageHandler  $PageHandler database handler
-    * @var PostHandler  $PostHandler database handler
+    * @var PageHandler  $pageHandler database handler
+    * @var BlogHandler  $blogHandler database handler
      */
     private $dbHandler;
     private $pageHandler;
-    // private $postHandler;
+    private $blogHandler;
 
     /**
      * The initialize method is optional and will always be called before
@@ -41,7 +41,7 @@ class ContentController implements AppInjectableInterface
         $this->app->db->connect();
         $this->dbHandler = new DbHandler();
         $this->pageHandler = new PageHandler();
-        // $this->postHandler = new PostHandler();
+        $this->blogHandler = new BlogHandler();
     }
 
 
@@ -375,6 +375,51 @@ class ContentController implements AppInjectableInterface
             "title" => $title,
         ]);
     }
+
+
+    /**
+     * This is the blog method action, it handles:
+     * GET mountpoint/blog
+     * It will render the view of a specific blog post or if $path
+     * is not set it will render a view of all published blog posts.
+     *
+     * @param string $slug path to the blog post
+     *
+     * @return object rendering the blog view
+     *
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
+    public function blogActionGet($slug = null) : object
+    {
+        if (!$slug) {
+            // View all blog posts
+            $title = "View blog";
+            $view = "content/blog";
+            $res = $this->blogHandler->fetchAll($this->app->db);
+        } else {
+            // View specific blog post
+            $view = "content/blogpost";
+            $res = $this->blogHandler->fetchPost($this->app->db, $slug);
+
+            // If no data the path was invalid
+            if (!$res) {
+                throw new \Anax\Route\Exception\NotFoundException;
+            }
+            $title = $res->title;
+        }
+        // Add view
+        $data = [
+            "res" => $res,
+        ];
+        $this->app->page->add("content/header");
+        $this->app->page->add($view, $data);
+
+        // Render view
+        return $this->app->page->render([
+            "title" => $title,
+        ]);
+    }
+
 
     /**
      * This is a private method to do the resetting of the database.
