@@ -5,6 +5,7 @@ namespace Anax\View;
  * Render the view to view all published blog posts
  */
 if (!$res) {
+    echo '<h1 class="content">The blog is empty</h1>';
     return;
 }
 $filter = new \Peo\MyTextFilter\TextFilter();

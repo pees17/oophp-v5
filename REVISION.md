@@ -1,9 +1,19 @@
 Revision history
 ==================
 
+v6.0.5 (2019-05-27)
+------------------------
+* Fixed some styling for the data driven website.
+* Komom06 now ready, except for report.
+
+v6.0.4 (2019-05-27)
+------------------------
+* Demo page ready to show the data driven website.
+
 v6.0.3 (2019-05-26)
 ------------------------
-* All page and post views and CRUD is working correctly.
+* All page and post views and CRUD is working correctly for editing the
+  data driven website.
 
 v6.0.2 (2019-05-22)
 ------------------------
