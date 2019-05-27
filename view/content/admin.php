@@ -32,10 +32,10 @@ if (!$res) {
         <td class="center fixed-width"><?= $row->updated ?></td>
         <td class="center fixed-width"><?= $row->deleted ?></td>
         <td class="center">
-        <a class="icon" title="Edit content" href="<?= url("content/edit/$row->id") ?>">
+        <a class="icon" title="Edit content" href="<?= url("editContent/edit/$row->id") ?>">
             <i class="fas fa-edit" aria-hidden="true"></i>
         </a>
-        <a class="icon" title="Delete content" href="<?= url("content/delete/$row->id") ?>">
+        <a class="icon" title="Delete content" href="<?= url("editContent/delete/$row->id") ?>">
             <i class="fas fa-trash-alt" aria-hidden="true"></i>
         </a>
         </td>

@@ -13,7 +13,7 @@ $filter = new \Peo\MyTextFilter\TextFilter();
 <?php foreach ($res as $row) : ?>
 <section>
     <header>
-        <h1 class="content blog"><a href="<?= url("content/blog/$row->slug") ?>"><?= esc($row->title) ?></a></h1>
+        <h1 class="content blog"><a href="<?= url("$url/$row->slug") ?>"><?= esc($row->title) ?></a></h1>
         <p><i>Published: <time datetime="<?= esc($row->published_iso8601) ?>" pubdate>
         <?= esc($row->published) ?></time></i></p>
     </header>

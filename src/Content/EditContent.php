@@ -8,7 +8,7 @@ use Anax\Commons\AppInjectableTrait;
 // use Anax\Route\Exception\NotFoundException;
 // use Anax\Route\Exception\InternalErrorException;
 /**
- * A controller that handles the content database.
+ * A controller that handles the administration of the content database.
  *
  * The controller is mounted on a particular route and can then handle all
  * requests for that mount point.
@@ -16,7 +16,7 @@ use Anax\Commons\AppInjectableTrait;
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  * @SuppressWarnings(PHPMD.ShortVariable)
  */
-class ContentController implements AppInjectableInterface
+class EditContent implements AppInjectableInterface
 {
     use AppInjectableTrait;
 
@@ -65,7 +65,7 @@ class ContentController implements AppInjectableInterface
         $data = [
             "res" => $res,
         ];
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add("content/index", $data);
 
         // Render view
@@ -93,7 +93,7 @@ class ContentController implements AppInjectableInterface
         $data = [
             "res" => $res,
         ];
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add("content/admin", $data);
 
         // Render view
@@ -115,7 +115,7 @@ class ContentController implements AppInjectableInterface
         $title = "Create content";
 
         // Add view
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add("content/create");
 
         // Render view
@@ -140,7 +140,7 @@ class ContentController implements AppInjectableInterface
         $id = $this->dbHandler->insert($this->app->db, ["title"], $contentTitle);
 
         // Redirect to edit
-        return $this->app->response->redirect("content/edit/$id");
+        return $this->app->response->redirect("editContent/edit/$id");
     }
     /**
      * This is the edit method action, it handles:
@@ -164,7 +164,7 @@ class ContentController implements AppInjectableInterface
         $data = [
             "res" => $res,
         ];
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add("content/edit", $data);
 
         // Render view
@@ -207,7 +207,7 @@ class ContentController implements AppInjectableInterface
         $this->dbHandler->update($this->app->db, $fields, array_values($params));
 
         // Redirect to edit
-        return $this->app->response->redirect("content/edit/$id");
+        return $this->app->response->redirect("editContent/edit/$id");
     }
 
 
@@ -234,7 +234,7 @@ class ContentController implements AppInjectableInterface
         $data = [
             "res" => $res,
         ];
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add("content/delete", $data);
 
         // Render view
@@ -259,7 +259,7 @@ class ContentController implements AppInjectableInterface
         $this->dbHandler->delete($this->app->db, $id);
 
         // Redirect to index
-        return $this->app->response->redirect("content/admin");
+        return $this->app->response->redirect("editContent/admin");
     }
 
 
@@ -276,7 +276,7 @@ class ContentController implements AppInjectableInterface
         $title = "Resetting the database";
 
         // Add view
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add("content/reset");
 
         // Render view
@@ -305,7 +305,7 @@ class ContentController implements AppInjectableInterface
         $data = [
             "output" => $output
         ];
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add("content/reset-result", $data);
 
         // Render view
@@ -333,7 +333,7 @@ class ContentController implements AppInjectableInterface
         $data = [
             "res" => $res,
         ];
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add("content/pages", $data);
 
         // Render view
@@ -365,9 +365,10 @@ class ContentController implements AppInjectableInterface
         $title = $res->title;
         $data = [
             "res" => $res,
-            "filters" => explode(",", $res->filter)
+            "filters" => explode(",", $res->filter),
+            "viewModified" => true
         ];
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add("content/page", $data);
 
         // Render view
@@ -410,8 +411,9 @@ class ContentController implements AppInjectableInterface
         // Add view
         $data = [
             "res" => $res,
+            "url" => "editContent/blog"
         ];
-        $this->app->page->add("content/header");
+        $this->app->page->add("content/edit-header");
         $this->app->page->add($view, $data);
 
         // Render view
