@@ -1,6 +1,10 @@
 Revision history
 ==================
 
+v6.0.6 (2019-05-27)
+------------------------
+* Ready with kmom06, including report.
+
 v6.0.5 (2019-05-27)
 ------------------------
 * Fixed some styling for the data driven website.
