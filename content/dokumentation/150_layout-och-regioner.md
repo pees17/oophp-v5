@@ -14,7 +14,7 @@ Till varje region kan man lägga innehåll och då visas regionen med dess inneh
 
 
 
-Konfiguration och gemensam bas
+Konfiguration och gemensam bas 
 ---------------------------
 
 När den resulterande webbsidan renderas så används en gemensam sidstruktur, vi kallar det webbsidans layout. I kursen använder vi en gemensam layout för att rendera alla sidor på webbplatsen.
@@ -86,6 +86,6 @@ Visa regioner
 
 Du kan lägga till querysträngen `?regions` på godtycklig sida för att låta ramverket visa upp de regioner som finns genom att styla dem med färger.
 
-Klicka på länken [visa denna sida med regioner](dokumentation/layout-och-regioner?regions) för att visualisera vilka regioner som finns på denna sidan.
+Klicka på länken [visa denna sida med regioner](verktyg/layout-och-regioner?regions) för att visualisera vilka regioner som finns på denna sidan.
 
 Vetskapen om regioner kan underlätta för dig när du stylar webbplatsen.

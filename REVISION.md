@@ -1,6 +1,11 @@
 Revision history
 ==================
 
+v7.0.0 (2020-05-07)
+------------------------
+* New versions of tools and framework.
+* Gone through kmom01 and done some minor updates.
+
 v6.0.6 (2019-05-27)
 ------------------------
 * Ready with kmom06, including report.

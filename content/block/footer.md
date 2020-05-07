@@ -1,1 +1,1 @@
-Copyright &copy; 2019 Peo Malm
+Copyright &copy; 2020 Peo Malm

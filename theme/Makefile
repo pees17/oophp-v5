@@ -105,6 +105,8 @@ prepare:
 	@$(call HELPTEXT,$@)
 	@[ -d $(BUILD)/less/css ] || install -d $(BUILD)/less/css
 	@[ -d $(BUILD)/less/lint ] || install -d $(BUILD)/less/lint
+	@rm -f $(BUILD)/less/css/*
+	@rm -f $(BUILD)/less/lint/*
 
 
 
@@ -170,7 +172,7 @@ test: less-lint
 
 # ------------------------------------------------------------------------
 #
-# External modules install/clean
+# External modules install
 #
 # target: modules-desinax-install - Install Desinax modules into less/sass/js-dir.
 .PHONY: modules-desinax-install
@@ -191,17 +193,6 @@ modules-desinax-install:
 
 
 
-# target: modules-desinax-clean   - Clean Desinax modules from src/.
-.PHONY: modules-desinax-clean
-modules-desinax-clean:
-	@$(call HELPTEXT,$@)
-	for module in $(DESINAX_MODULES) ; do     \
-		$(call ACTION_MESSAGE, $$module);     \
-		rm -rf src/$$module/*; 		          \
-	done
-
-
-
 # target: modules-install         - Install external modules.
 .PHONY: modules-install
 modules-install: modules-desinax-install
@@ -215,19 +206,6 @@ modules-install: modules-desinax-install
 	# Font Awesome
 	npm install @fortawesome/fontawesome-free
 	rsync -av --exclude package.json node_modules/@fortawesome/fontawesome-free src/@fortawesome/
-
-
-
-# target: modules-clean           - Clean external modules.
-.PHONY: modules-clean
-modules-clean: modules-desinax-clean
-	@$(call HELPTEXT,$@)
-
-	# Normalize.css
-	rm -rf src/normalize.css
-
-	# Font Awesome
-	rm -rf src/@fortawesome
 
 
 

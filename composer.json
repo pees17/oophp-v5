@@ -5,16 +5,13 @@
     "minimum-stability": "beta",
     "prefer-stable": true,
     "autoload": {
-        "psr-4": {"Anax\\": "src/",
-                  "Peo\\": "src/"
-        },
-        "files": ["src/function.php"]
+        "psr-4": {"Anax\\": "src/"}
     },
     "require": {
-        "anax/anax-oophp-me": "^2.0.0@beta",
-        "anax/database": "^2.2"
+        "anax/anax-oophp-me": "^2.0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7"
+        "phpunit/phpunit": "^9",
+        "phpstan/phpstan": "^0.12.19"
     }
 }

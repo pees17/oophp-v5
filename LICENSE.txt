@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2013 - 2019 Peo Malm (p-o.eriksson@hotmail.com)
+Copyright (c) 2013 - 2020 Peo Malm (peo.malm@outlook.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
