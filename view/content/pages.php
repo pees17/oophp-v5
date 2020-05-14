@@ -6,6 +6,7 @@ namespace Anax\View;
  */
 
 if (!$res) {
+    echo '<h2 class="content">There are no pages</h2>';
     return;
 }
 ?><table class="content page">

@@ -1,6 +1,11 @@
 Revision history
 ==================
 
+v7.2.0 (2020-05-14)
+------------------------
+* Gone through kmom05 - kmom06 and done some minor updates.
+
+
 v7.1.0 (2020-05-11)
 ------------------------
 * Gone through kmom02 - kmom04 and done some minor updates.

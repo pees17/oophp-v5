@@ -4695,10 +4695,12 @@ form.content p:last-of-type {
 form.content p.reset-button {
   margin-top: 0.5em;
 }
-h1.content {
+h1.content,
+h2.content {
   margin: 16px 0;
 }
-h1.content + p {
+h1.content + p,
+h2.content + p {
   margin-top: 12px;
 }
 h1.content.blog {
