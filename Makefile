@@ -257,7 +257,6 @@ install-tools-php:
 	@$(call HELPTEXT,$@)
 	# phpdoc
 	curl -Lso $(PHPDOC) https://github.com/phpDocumentor/phpDocumentor2/releases/download/v3.0.0-rc/phpDocumentor.phar && chmod 755 $(PHPDOC)
-
 	# phpdox
 	curl -Lso $(PHPDOX) http://phpdox.de/releases/phpdox.phar && chmod 755 $(PHPDOX)
 
